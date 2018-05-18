@@ -13,14 +13,15 @@
 % The car maneuvers and initial states can be modified. Auto 1 carries the
 % radar. Auto 4 performs a passing maneuver around Auto 1.
 %
-% This demo takes 4 min to run without graphics.
-% -------------------------------------------------------------------------
-% See also AutoRadar, AutomobilePassing, RHSAutomobile, RHSAutomobileXY,
+% To run this software you will need GLPK.
+% You will need glpk.m and its associated mex file for your machine. For
+% example, for a Mac you need the mex file glpkcc.mexmaci64. For more
+% information https://www.gnu.org/software/glpk/
+%
+
+%% See also
+% AutoRadar, AutomobilePassing, RHSAutomobile, RHSAutomobileXY,
 % AutoRadarUKF
-% -------------------------------------------------------------------------
-%% Copyright
-%   Copyright (c) 2016k Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 %% Initialize
 
@@ -111,7 +112,7 @@ s  = 1:6*nAuto;
 %% Simulate
 t                   = (0:(n-1))*dT;
 
-fprintf(1,'\nRunning the simulation...');
+fprintf(1,'\nRunning the simulation...\n');
 for k = 1:n
     
   % Plotting
@@ -146,7 +147,7 @@ for k = 1:n
   x           = RungeKutta(@RHSAutomobile, 0, x, dT, d );
     
 end
-fprintf(1,'DONE.\n');
+fprintf(1,'Simulation done.\n');
 
 % The state of the radar host car
 xRadar = xP(1:6,:);
@@ -174,37 +175,37 @@ grid
 
 kV = [19:24 31 32];
 yL = {'x (m)' 'y (m)' 'v_x (m/s)' 'v_y (m/s)' '\theta (rad)' '\omega (rad/s)' '\delta (rad)' 'T (Nm)'};
-Plot2D( t,xP(kV,:), tL, yL,'Passing car');
+PlotSet( t,xP(kV,:), 'x label',tL, 'y label', yL,'figure title','Passing car');
 
 % Plot the radar results but ignore cars that are not observed
 for k = 1:nAuto-1
-    j   = 3*k-2:3*k;
-    sL  = sprintf('Radar: Observed Auto %d',k);
-    b   = mean(yP(j(1),:));
-    if( b ~= 0 )
-        Plot2D(t,[yP(j,:);vP(k,:)],tL,{'Range (m)' 'Range Rate (m/s)' 'Azimuth (rad)' 'Valid'},sL);
-    end
+	j   = 3*k-2:3*k;
+	sL  = sprintf('Radar: Observed Auto %d',k);
+	b   = mean(yP(j(1),:));
+	if( b ~= 0 )
+    PlotSet(t,[yP(j,:);vP(k,:)],'x label',tL,'y label', {'Range (m)' 'Range Rate (m/s)' 'Azimuth (rad)' 'Valid'},'figure title',sL);
+	end
 end
 
 %% Implement MHT
 
-% Covariances
-r0      = dRadar.noise.^2;	  % Measurement 1-sigma
-q0      = [1e-7;1e-7;.1;.1]; 	% The baseline plant covariance diagonal
-p0      = [5;0.4;1;0.01].^2;	% Initial state covariance matrix diagonal
-
 
 % Adjust the radar data structure for the new state
-dRadar.noise    = [0;0;0];
 dRadar.kR       = [1;2];
 dRadar.kV       = [3;4];
 dRadar.noLimits	= 1;
 
-ukf         = KFInitialize('ukf','x',xRadar(1:4,1),'f',@RHSAutomobileXY,...
-                           'h', {@AutoRadarUKF},'hData',{dRadar},'alpha',1,...
-                           'kappa',2,'beta',2,'dT',dT,'fData',[],'p',diag(p0),...
-                           'q',diag(q0),'m',xRadar(1:4,1),'r',{diag(r0)});
-ukf         = UKFWeight( ukf );
+
+% Covariances
+r0      = diag(dRadar.noise.^2);	  % Measurement 1-sigma
+q0      = [1e-7;1e-7;.1;.1]; 	% The baseline plant covariance diagonal
+p0      = [5;0.4;1;0.01].^2;	% Initial state covariance matrix diagonal
+
+ukf = KFInitialize( 'ukf','f',@RHSAutomobileXY,'alpha',1,...
+                    'kappa',0,'beta',2,'dT',dT,'fData',struct('f',0),...
+                    'p',diag(p0),'q',diag(q0),'x',[0;0;0;0],'hData',struct('theta',0),...
+                  	'hfun',@AutoRadarUKF,'m',[0;0;0;0],'r',r0);
+ukf	= UKFWeight( ukf );
 
 [mhtData, trk] = MHTInitialize(	'probability false alarm', 0.01,...
                                 'probability of signal if target present', 1,...
@@ -236,22 +237,22 @@ b       = MHTTrkToB( trk );
 t       = 0;
 
 % Parameter data structure for the measurements
-sParam  = struct( 'hFun', @AutoRadarUKF, 'hData', dRadar, 'r', diag(r0) );
+sensorParam  = struct( 'hFun', @AutoRadarUKF, 'hData', dRadar, 'r', r0 );
 
 TOMHTTreeAnimation( 'initialize', trk );
 MHTGUI;
 MLog('init')
 MLog('name','MHT Automobile Tracking Demo')
 
-fprintf(1,'Running the MHT...');
+fprintf(1,'Running the MHT...\n');
 for k = 1:n
        
   % Assemble the measurements
 	zScan = [];
   for j = 1:size(vP,1)
     if( vP(j,k) == 1 )
-      tJ      = 3*j;
-      zScan	= AddScan( yP(tJ-2:tJ,k), [], [], sParam, zScan );
+      tJ    = 3*j;
+      zScan	= AddScan( yP(tJ-2:tJ,k), sensorParam, zScan );
     end
   end
 
@@ -261,11 +262,11 @@ for k = 1:n
   mhtData.fScanToTrackData.theta	= xRadar(5,k);
 
   % Manage the tracks
-  [b, trk, sol, hyp, mhtData] = MHTTrackMgmt( b, trk, zScan, mhtData, k, t );
+  [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, mhtData, k, t );
 
   % A guess for the initial velocity of any new track
   for j = 1:length(trk)
-    mhtData.fScanToTrackData.x =  xRadar(:,k);
+    mhtData.fScanToTrackData.x = xRadar(:,k);
   end
     
   % Update MHTGUI display
@@ -282,7 +283,7 @@ for k = 1:n
   % Update time
   t = t + dT;
 end
-fprintf(1,'DONE.\n');
+fprintf(1,'MHT done.\n');
 
 % Show the final GUI
 if (~treeAnimationOn)
@@ -292,6 +293,3 @@ if (~graphicsOn)
   MHTGUI(trk,sol,'hide');
 end
 MHTGUI;
-
-PlotTracks(trk)
-

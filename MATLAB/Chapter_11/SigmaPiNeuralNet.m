@@ -1,4 +1,4 @@
-%% SIGMAPINEURALNET
+%% SIGMAPINEURALNET Sigma-pi neural net
 %% Forms
 % [y, d] = SigmaPiNeuralNet( action, x, d )
 %
@@ -44,10 +44,6 @@
 %% References
 % None.
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function [y, d] = SigmaPiNeuralNet( action, x, d )
 
 % Demo or default data structure
@@ -83,8 +79,9 @@ switch lower(action)
     error('%s is not an available action',action );
 end
 
+%% SigmaPiNeuralNet>>CreateZIndice
 function d = CreateZIndices( x, d )
-%% Create the indices
+% Create the indices
 
 n     = length(x);
 m     = 0;
@@ -106,9 +103,9 @@ for k = 1:n
 end
 d.nZ = m+1;
 
-
+%% SigmaPiNeuralNet>>CreateZArray
 function d = CreateZArray( x, d )
-%% Create array of products of x
+% Create array of products of x
 
 n = length(x);
 
@@ -120,8 +117,8 @@ for k = 1:d.nZ-1
   end
 end
 
+%% SigmaPiNeuralNet>>RecursiveLearning
 function [y, d] = RecursiveLearning( x, d )
-%% Recursive Learning
 
 d   = CreateZArray( x, d );
 z   = d.z;
@@ -129,7 +126,7 @@ d.p	= d.p - d.p*(z*z')*d.p/(1+z'*d.p*z);
 d.w	= d.w + d.p*z*(d.y - z'*d.w);
 y   = z'*d.w;
 
-
+%% SigmaPiNeuralNet>>NNOutput
 function [y, d] = NNOutput( x, d )
 %% Output without learning
 
@@ -138,9 +135,9 @@ x = SigmoidFun(x,d.kSigmoid);
 d   = CreateZArray( x, d );
 y   = d.z'*d.w;
 
-
+%% SigmaPiNeuralNet>>BatchLearning
 function [y, d] = BatchLearning( x, d )
-%% Batch Learning
+% Batch Learning
 
 z = zeros(d.nZ,size(x,2));
 
@@ -154,8 +151,9 @@ d.p = inv(z*z');
 d.w = (z*z')\z*d.y;
 y   = z'*d.w;
 
+%% SigmaPiNeuralNet>>DefaultDataStructure
 function d = DefaultDataStructure
-%% Default data structure
+% Default data structure
 
 d           = struct();
 d.w         = [];
@@ -165,15 +163,16 @@ d.z         = [];
 d.kSigmoid  = 0.0001;
 d.y         = [];
 
+%% SigmaPiNeuralNet>>SigmoidFun
 function s = SigmoidFun( x, k )
-%% Sigmoid function
+% Sigmoid function
 
 kX  = k.*x;
 s   = (1-exp(-kX))./(1+exp(-kX));
 
+%% SigmaPiNeuralNet>>Demo
 function Demo
-%% Demo
-
+% Demonstrate a sigma-pi neural net for dynamic pressure
 x       = zeros(2,1);
 
 d       = SigmaPiNeuralNet;

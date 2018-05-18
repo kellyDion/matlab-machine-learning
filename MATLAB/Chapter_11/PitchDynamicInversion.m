@@ -27,10 +27,6 @@
 %% References
 % None.
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function qDot = PitchDynamicInversion( x, d )
 
 if( nargin < 1 )
@@ -61,9 +57,9 @@ z     = -lift*cA - drag*sA;
 m     = d.c*z;
 qDot  = m/d.inertia;
 
-
+%% PitchDynamicInversion>>DataStructure
 function d = DataStructure
-%% Data structure
+% Data structure
 
 % F-16
 d               = struct();

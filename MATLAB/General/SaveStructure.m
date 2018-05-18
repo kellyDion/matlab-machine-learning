@@ -1,13 +1,13 @@
-%% SAVESTRUCTURE Save a data structure
-%% Form:
+%% SAVESTRUCTURE Save a data structure to a mat file
+%% Form
 %   SaveStructure( g, fileName )
 %
 %% Description
-%   Save a structure in a file. You will be able to read it in by typing
+% Save a structure in a file. You will be able to read it in by typing
+%
 %   g = load('fileName');
 %
 %% Inputs
-%
 %   g        (.)   Data structure
 %   fileName (1,:) .mat file name
 %

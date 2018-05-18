@@ -25,10 +25,6 @@
 %   None
 %
 
-%% Copyright
-%   Copyright (c) 1997, 2016 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
-
 function Globe( planet, radius )
 
 

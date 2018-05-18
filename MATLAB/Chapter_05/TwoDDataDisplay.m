@@ -1,15 +1,13 @@
 %% Represent 2D data
-% Demonstrate 2D data display
+% Demonstrate 2D data display. Several MATLAB visualization functions
+% are shown.
 %% See also
 % surf, surfl, mesh, bar3, contour 
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 m = rand(8,8);
 
-NewFigure('Two Dimensional Data');
+h = NewFigure('Two Dimensional Data');
+colormap(h,'gray')
 
 subplot(2,3,1)
 surf(m)

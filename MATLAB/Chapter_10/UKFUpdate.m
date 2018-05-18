@@ -1,6 +1,6 @@
 
 %% UKFUPDATE Unscented Kalman Filter measurement update step.
-%% Form:
+%% Form
 %  d = UKFUpdate( d )
 %
 %% Description
@@ -10,7 +10,7 @@
 %   d	(.)  UKF data structure
 %              .m       (:,1)	Mean
 %              .p       (:,:)	Covariance
-%              .h       {}    Measurement function pointers
+%              .hFun    {}    Measurement function pointers
 %              .hData   {}    Measurement function data
 %              .r       {}    Measurement covariance matrices
 %              .y       (1,1)	Measurements
@@ -22,10 +22,6 @@
 %              .m       (:,1)	Mean
 %              .p       (:,:)	Covariance
 %              .v       (m,1)	Residuals
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = UKFUpdate( d )
 

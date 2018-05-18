@@ -7,10 +7,6 @@
 %% See Also
 % DecisionTree, ClassifierSets, DrawBinaryTree
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 % Create the decision tree
 d      = DecisionTree;
 

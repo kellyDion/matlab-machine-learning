@@ -1,28 +1,26 @@
-%% C2DZOH converts continuous time to discrete time
+%% CTODZOH Convert continuous time system to discrete time
 %% Form
-%  [f, g] = C2DZOH( a, b, T )
+%  [f, g] = CToDZOH( a, b, T )
 %
 %% Description
-%
 % Continuous to discrete transformation using a zero order hold. Discretize
 % using a matrix exponential.
 %
 % Given
-% .
-% x = ax + bu
+%
+%   .
+%   x = ax + bu
 %
 % Find f and g where
 %
-% x(k+1) = fx(k) + gu(k)
+%   x(k+1) = fx(k) + gu(k)
 %
 %% Inputs
-%
 %  a  (n,n)  Continuous plant  matrix
 %  b  (n,m)  Input matrix
 %  T  (1,1)  Time step
 %
 %% Outputs
-%
 %  f  (n,n)  Discrete plant
 %  g  (n,m)  Discrete input
 %
@@ -34,8 +32,8 @@
 %               Vol. AC-23, No. 3, June 1978, pp. 395-404.
 
 %% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
+%   All rights reserved.
 
 function [f, g] = CToDZOH( a, b, T )
 

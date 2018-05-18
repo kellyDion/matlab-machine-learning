@@ -1,8 +1,9 @@
-
+%% SECONDORDERSYSTEMSIM Run the system simulation.
 %% Form
-%  SecondOrderSystemSimGUI( d )
+%  [xP, t, tL] = SecondOrderSystemSim( d )
+%  SecondOrderSim % Demo
 %
-%% Decription
+%% Description
 % Run a simulation for a second order system. Plots the results.
 %
 % Type SecondOrderSystemSim for a demo.
@@ -18,15 +19,19 @@
 %                .tEnd          (1,1) Sim end time (s)
 %
 %% Outputs
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+%  xP
+%  t
+%  tL
 
 function [xP, t, tL] = SecondOrderSystemSim( d )
 
 if( nargin < 1 )
-  xP  = DefaultDataStructure;
+  if( nargout > 0 )
+    xP  = DefaultDataStructure;
+  else
+    d   = SecondOrderSystemSim;
+    SecondOrderSystemSim( d );
+  end
   return
 end
 
@@ -74,7 +79,7 @@ xDot = [x(2);f];
 
 %% SecondOrderSystemSim>>DefaultDataStructure
 function d = DefaultDataStructure
-
+% Simulates a damped oscillator with as step input.
 d               = struct();
 d.omega         = 0.1;
 d.zeta          = 0.4;

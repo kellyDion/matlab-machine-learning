@@ -1,15 +1,24 @@
-function data = catReducer
-
-%% Example of using mapreduce with an ImageDatastore
+%% CATREDUCER Use mapreduce with an ImageDatastore
+%% Form
+% data = catReducer
+%
+%% Description
 % The are a number of pictures of cats in the Cats/ folder, for use in the image
 % recognition chapter. We use mapreduce to perform a simple analysis on the
 % colors of the images, which could be extended to any computation.
-%% Output
+%
+%% Inputs
+% None
+%
+%% Outputs
 % data   (:)   A table of outputs, one for each key: Red, Green, Blue
+
+function data = catReducer
 
 imds = imageDatastore('../Cats');
 maxRGB = mapreduce(imds, @catColorMapper, @catColorReducer);
-data = readall(maxRGB)
+data = readall(maxRGB);
+disp(data)
 
 function catColorMapper(data, info, intermediateStore)
 % info includes filename and filesize

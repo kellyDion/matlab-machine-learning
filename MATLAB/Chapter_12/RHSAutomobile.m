@@ -1,7 +1,6 @@
 
-%% RHSAutomobile
-%   Right hand side for a 2D automobile.
-%% Form:
+%% RHSAUTOMOBILE Right hand side for a 2D automobile.
+%% Form
 %   xDot = RHSAutomobile( t, x, d )
 %
 %% Inputs
@@ -23,10 +22,6 @@
 %% Outputs
 %   x	(6*n,1)  d[x;y;vX;vY;theta;omega]/dt
 %
-
-%% Copyright
-%	  Copyright (c) 2012, 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function xDot = RHSAutomobile( ~, x, d )
 

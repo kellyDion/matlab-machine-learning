@@ -1,4 +1,4 @@
-%% HOMOGENEITYMEASURE - 0 if the data is homogeneous
+%% HOMOGENEITYMEASURE The measure is 0 if the data is homogeneous
 %
 %% Form:
 %   [i, d] = HomogeneityMeasure( action, d, data )
@@ -19,11 +19,6 @@
 %% Outputs
 %  d    (.)   Data structure
 %  i    (1,1) Gini impurity measure
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function [i, d] = HomogeneityMeasure( action, d, data )
 
 if( nargin == 0 )
@@ -87,16 +82,17 @@ end
 
 d.i = 1 - sum(d.dist.^2);
   
-
+%% HomogeneityMeasure>>DefaultDataStructure
 function d = DefaultDataStructure
-%% Default data structure
+% Default data structure
 d.dist  = [];
 d.data  = [];
 d.class = [];
 d.i     = 1;
 
+%% HomogeneityMeasure>>Demo
 function d = Demo
-%% Demo
+% Demonstrate the homogeniety measure for a data set.
 
 data = [ 1 2 3 4 3 1 2 4 4 1 1 1 2 2 3 4]';
 

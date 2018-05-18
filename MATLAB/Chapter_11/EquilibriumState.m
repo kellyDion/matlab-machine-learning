@@ -1,6 +1,4 @@
-%% EQUILIBRIUMSTATE
-function [x, thrust, delta, cost] = EquilibriumState( gamma, v, h, d )
-
+%% EQUILIBRIUMSTATE Computes the equilibrium state for RHSAircraft
 %% Form
 % [x, thrust, delta, cost] = EquilibriumState( gamma, v, h, d )
 %
@@ -9,7 +7,7 @@ function [x, thrust, delta, cost] = EquilibriumState( gamma, v, h, d )
 % to drive the first two time derivatives to zero. It then computes
 % the elevator angle needed to get zero pitch rate.
 %
-% If no inputs are specified it run a demo
+% If no inputs are specified it runs a demo.
 %
 %% Inputs
 %  gamma  (1,1) Flight path angle (rad)
@@ -35,12 +33,10 @@ function [x, thrust, delta, cost] = EquilibriumState( gamma, v, h, d )
 %  delta    (1,1) Elevator angle (rad)
 %  cost     (1,2) Initial and final cost
 %
-%% References
-% None.
+%% See also
+% Subfunctions EquilibriumState>RHS, EquilibriumState>Demo
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+function [x, thrust, delta, cost] = EquilibriumState( gamma, v, h, d )
 
 %% Code
 if( nargin < 1 )
@@ -67,7 +63,7 @@ delta         = -asin(d.inertia*xDot(3)/(d.rE*d.sE*p));
 d.delta       = delta;
 radToDeg      = 180/pi;
 
-fprintf(1,'Velocity          %8.2f m/s\n',v);
+fprintf(1,'\nVelocity          %8.2f m/s\n',v);
 fprintf(1,'Altitude          %8.2f m\n',h);
 fprintf(1,'Flight path angle %8.2f deg\n',gamma*radToDeg);
 fprintf(1,'Z speed           %8.2f m/s\n',w);
@@ -78,7 +74,11 @@ fprintf(1,'Initial cost      %8.2e\n',cost(1));
 fprintf(1,'Final cost        %8.2e\n',cost(2));
 
 function cost = RHS( y, d, gamma, v, h )
-%% Cost function for fminsearch
+%% EquilibriumState>RHS
+% Cost function for fminsearch. The cost is the square of the velocity
+% derivatives (the first two terms of xDot from RHSAircraft).
+%
+% See also RHSAircraft.
 
 w         = y(1);
 d.thrust	= y(2);
@@ -90,12 +90,16 @@ x         = [u;w;0;theta;h];
 xDot      = RHSAircraft( 0, x, d );
 cost      = xDot(1:2)'*xDot(1:2);
 
+%% EquilibriumState>Demo
 function Demo
-%% Demo
-d     = RHSAircraft;
+% Find the equilibrium state for an aircraft
+
+echo on EquilibriumState
 gamma = 0.0;
 v     = 250;
 h     = 10000;
+d     = RHSAircraft;
+echo off EquilibriumState
 
 EquilibriumState( gamma, v, h, d );
 

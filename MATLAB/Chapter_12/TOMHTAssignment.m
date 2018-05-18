@@ -1,6 +1,8 @@
-function d = TOMHTAssignment( trk, M, glpkParams )
-
-%% TOMHTAssignment 
+%% TOMHTASSIGNMENT Track oriented MHT assignment
+%% Form
+%   d = TOMHTAssignment( trk, M, glpkParams );
+%
+%% Description
 % Track oriented MHT assignment. Generates hypotheses.
 %
 % The "b" matrix represents a stacked set of track-trees.
@@ -14,9 +16,6 @@ function d = TOMHTAssignment( trk, M, glpkParams )
 % Solution vector "x" is 0|1 array that selects a set of track-tree-paths.
 % 
 % Objective is to find the hypothesis that maximizes total score.
-%
-%% Form:
-%   d = TOMHTAssignment( trk, M, glpkParams );
 %
 %% Inputs
 %   trk         (.)       Data structure array of track information
@@ -59,10 +58,7 @@ function d = TOMHTAssignment( trk, M, glpkParams )
 % 	Blackman, S. and R. Popoli, "Design and Analysis of  Modern
 %  	Tracking Systems," Artech House, 1999.
 
-%% Copyright
-%   Copyright (c) 2012-2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-
+function d = TOMHTAssignment( trk, M, glpkParams )
 
 %==================================
 %     --- OPTIONS --- 
@@ -110,6 +106,7 @@ if( nargin<5 )
 end
 
 % extract "b" matrix
+%[b,bSens,bScan] = MHTTrkToB(trk);
 b = MHTTrkToB(trk);
 
 % the track tree IDs
@@ -167,14 +164,9 @@ for i=1:M
   col0 = (i-1)*nT;
   for j=1:nT
     d.varType(col0+j) = 'B'; % all binary variables
-    %d.c(col0+j) = trackProb(j);
     d.c(col0+j) = trackScores(j);
-    %d.c(col0+j) = trackScoresPos(j);
   end
 end
-
-% coefficients for unique tag generation
-%coeff = 2.^[0 : 1 : nT-1];
 
 conIndex = 0;
 
@@ -186,6 +178,7 @@ kAllZeroTracks = find(bSumCols==0);
 
 for mm = 1:M
 
+  % **** OBJECT ID CONSTRAINTS ****
   % for each track-tree ID
   treeIDsU = unique(treeIDs);
   for i=1:length(treeIDsU)
@@ -195,19 +188,21 @@ for mm = 1:M
     conIndex = conIndex+1;
     for j=rows
       d.A(conIndex,col0+j) = 1;
-      d.b(conIndex)        = 1;
+      d.b(conIndex,1)        = 1;
       d.conType(conIndex)   = 'U'; % upper bound: A(conIndex,:)*x <= 1
     end
   end
     
-  % for each scan
+  % **** MEASUREMENT INDEX CONSTRAINTS ****
+  % for each column (unique sensor/scan combination)
   for i=1:nS
     
-    % number of measurements taken for this scan
-    nMeasForThisScan = max(b(:,i));
-    
+    % measurement index values for this scan
+    measIndex = unique(b(:,i))';
+    measIndex = measIndex(measIndex~=0);
+        
     % for each measurement (not 0)
-    for k=1:nMeasForThisScan
+    for k=measIndex
       
       % get rows of b matrix with this measurement index
       bRowsWithMeasK = find(b(:,i)==k);
@@ -218,10 +213,11 @@ for mm = 1:M
       for j = bRowsWithMeasK
         
         d.A(conIndex,col0+j)  = 1;
-        d.b(conIndex)         = 1;
         d.conType(conIndex)   = 'U'; % upper bound: A(conIndex,:)*x <= 1
         
       end
+      d.b(conIndex,1) = 1;
+      
     end
   end
   
@@ -230,10 +226,16 @@ for mm = 1:M
     for col = kAllZeroTracks
       conIndex = conIndex+1;
       d.A(conIndex,col) = 1;
-      d.b(conIndex) = 0;
+      d.b(conIndex,1) = 0;
       d.conType(conIndex) = 'S';
     end
   end
+  
+  % must select at least one track for each hypothesis
+  conIndex = conIndex + 1;
+  d.A( conIndex, col0+(1:nT) ) = 1;
+  d.b( conIndex, 1 ) = 1;
+  d.conType(conIndex) = 'L';
   
   col0 = col0 + nT;
   
@@ -312,9 +314,11 @@ for mm=1:M
   sel = find(d.x(rows));
   d.hypothesis(mm).treeID       = treeIDs(sel);
   d.hypothesis(mm).tracks       = b(sel,:);
+  d.hypothesis(mm).meas = {};
+  d.hypothesis(mm).scans = {};
   for j=1:length(sel)
-    d.hypothesis(mm).meas{j}  = trk(sel).measHist;
-    d.hypothesis(mm).scans{j} = trk(sel).scanHist;
+    d.hypothesis(mm).meas{j}  = trk(sel(j)).measHist;
+    d.hypothesis(mm).scans{j} = trk(sel(j)).scanHist;
   end
   d.hypothesis(mm).trackIndex   = sel;
   d.hypothesis(mm).trackScores  = trackScores(sel);

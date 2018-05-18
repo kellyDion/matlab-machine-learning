@@ -1,8 +1,6 @@
 
-%% RHSAUTOMOBILEXY
-%   Double integrator model for a car.
-
-%% Form:
+%% RHSAUTOMOBILEXY Double integrator model for a car.
+%% Form
 %   xDot = RHSAutomobileXY( t, x, d )
 %
 %% Inputs
@@ -12,10 +10,6 @@
 %
 %% Outputs
 %   x	(4,1)   State derivative d[x;y;vX;vY]/dt
-
-%% Copyright
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function xDot = RHSAutomobileXY( ~, x, ~ )
 

@@ -1,39 +1,26 @@
-function varargout = MHTGUI(varargin)
-
-%--------------------------------------------------------------------------
-%   A graphical user interface (GUI) for multiple hypothesis testing (MHT)
-%--------------------------------------------------------------------------
-%   Forms:
-%
+%% MHTGUI Graphical user interface for MHT
+%% Forms
 %   MHTGUI            Initialize blank MHTGUI if it does not yet exist;
 %                     bring existing MHTGUI window to the front.
 %   MHTGUI(trk)       Update the GUI with given track data. 
 %   MHTGUI(trk,hyp)   Update the GUI with given track and hypothesis data.
 %   MHTGUI(trk,hyp,'hide')    Update the GUI with given data but do not
 %                             bring it to the front.
-% 
-%--------------------------------------------------------------------------
 %
-%   ------
-%   Inputs
-%   ------
+%% Description
+% A graphical user interface (GUI) for multiple hypothesis testing (MHT)
+%
+%% Inputs
 %   trk       (.)   Track data structure array. See MHTTrackMgmt.m
 %   hyp       (.)   Hypothesis data structure.  See TOMHTAssignment.m
 %   option    ''    Optional argument to specify window visibility. Use
 %                   this with "hide" to prevent flashing window during 
 %                   repeated updates of the MHTGUI in a simulation loop.
 %
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   None
-%
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function varargout = MHTGUI(varargin)
 
 % Last Modified by GUIDE v2.5 08-Jul-2013 09:38:36
 
@@ -302,12 +289,3 @@ fname = genvarname(filename);         % convert the file name to a valid field n
 fname = fliplr(fname);            % file name is more important
 token = ['OpenFig_' fname '_SINGLETON']; % hide leading kruft
 token = token(1:min(end, namelengthmax));
-
-
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-08-19 23:07:24 -0400 (Fri, 19 Aug 2016) $
-% $Revision: 43094 $
-

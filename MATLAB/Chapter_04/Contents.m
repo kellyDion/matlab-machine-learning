@@ -1,4 +1,6 @@
 % CHAPTER_04
 %
 % Files
-%   catReducer - Example of using mapreduce with an ImageDatastore
+%   catReducer - Use mapreduce with an ImageDatastore
+
+

@@ -1,99 +1,28 @@
-function n = MHTMatrixTreeConvert( b )
-
-%--------------------------------------------------------------------------
-%   Convert from MHT track matrix to tree or tree to matrix.
-%
-%   Type MHTMatrixTreeConvert for a demo. Draws a tree if no outputs are
-%   requested.
-%--------------------------------------------------------------------------
-%   Form:
+%% MHTMATRIXTREECONVERT Convert from matrix to tree
+%% Form
 %   n = MHTMatrixTreeConvert( b )
-%--------------------------------------------------------------------------
 %
-%   ------
-%   Inputs
-%   ------
+%% Description
+% Convert from MHT track matrix to tree or tree to matrix.
+%
+% Type MHTMatrixTreeConvert for a demo. Draws a tree if no outputs are
+% requested.
+%
+%% Inputs
 %   n        {:}    Nodes
 %                   .parent	    (1,1) Parent
 %                   .name       (1,1) Number of observation 
 %                   .scan       (1,1) Scan number
 %   b        (:,:)  Matrix representation
 %
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   n or b
-%
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function n = MHTMatrixTreeConvert( b )
 
 % Demo
-%-----
 if( nargin < 1 )
-    
-  b = [	1     0     0     0;...
-        1     1     0     0;...
-        1     1     1     0;...
-        1     1     1     1];
-        
-  disp('MHT Matrix: rows are tracks columns are scans');
-  disp(b)
-        
-	n = MHTMatrixTreeConvert( b );
-  TreeDiagram( n )
-    
-	b = MHTMatrixTreeConvert( n );
-  disp('MHT Matrix from tree')
-  disp(b)
-
-  b = [	1     0;...
-        1     1;...
-        2     0;...
-        2     1;...
-        2     2;...
-        2     3;...
-        0     1;...
-        0     2;...
-        0     3];
-
-  disp('MHT Matrix: rows are tracks columns are scans');
-  disp(b)
-
-  n = MHTMatrixTreeConvert( b );
-  TreeDiagram( n )
-    
-	b = MHTMatrixTreeConvert( n );
-  disp('MHT Matrix from tree')
-  disp(b)
-    
-  b = [	1     0     0;...
-        1     1     0;...
-        1     1     1;...
-        2     0     0;...
-        2     1     0;...
-        2     2     0;...
-        2     2     2;...
-        2     3     0;...
-        0     1     0;...
-        0     2     0;...
-        0     3     0;...
-        0     0     1;...
-        0     0     2];
-        
-  disp('MHT Matrix: rows are tracks columns are scans');
-  disp(b)
-  n = MHTMatrixTreeConvert( b );
-
-  TreeDiagram( n )
-    
-	b = MHTMatrixTreeConvert( n );
-  disp('MHT Matrix from tree')
-  disp(b)
-  clear n;
+  Demo
   return
 end
 
@@ -129,7 +58,7 @@ node    = 0;
 
 % initialize "obsOld" to value that cannot be equal to b(1,1)
 obsOld = -rand;
-[nB,mB] = size(b);
+[nB,~] = size(b);
 nodeList = [];
 
 ids = unique(b(:,1));
@@ -190,7 +119,7 @@ if( isempty( b ) )
     return;
 end
 
-[nB,mB] = size(b);
+nB = size(b);
 nodeList = [];
 
 scan   = n{parent}.scan+1;
@@ -216,13 +145,10 @@ for k = nodeList
     [n, node]   = NodeToTree( n, bN, node, k );
 end
 
-%--------------------------------------------------------------------------
-%	Convert tree to matrix
-%--------------------------------------------------------------------------
+%% MHTMatrixTreeConvert>>TreeToMatrix
 function b = TreeToMatrix( n )
 
 % Find the matrix size
-%---------------------
 scanMax = 0;
 for k = 1:length(n)
     scanMax = max([scanMax n{k}.scan]);
@@ -236,11 +162,9 @@ for k = 1:length(n)
 end
 
 % Initialize the matrix
-%----------------------
 b = zeros(rows,scanMax);
 
 % Start from the last column
-%---------------------------
 j = 0;
 for k = 1:length(n)
     if( n{k}.scan == scanMax )
@@ -262,9 +186,65 @@ end
 
 b = MHTMatrixSortRows(b);
 
+%% MHTMatrixTreeConvert>>Demo
+function Demo
+% Generate trees from several different matrices
 
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-08-19 23:07:24 -0400 (Fri, 19 Aug 2016) $
-% $Revision: 43094 $
+b = [	1     0     0     0;...
+      1     1     0     0;...
+      1     1     1     0;...
+      1     1     1     1];
+        
+disp('MHT Matrix: rows are tracks columns are scans');
+disp(b)
+        
+n = MHTMatrixTreeConvert( b );
+TreeDiagram( n )
+    
+b = MHTMatrixTreeConvert( n );
+disp('MHT Matrix from tree')
+disp(b)
+
+b = [	1     0;...
+      1     1;...
+      2     0;...
+      2     1;...
+      2     2;...
+      2     3;...
+      0     1;...
+      0     2;...
+      0     3];
+
+disp('MHT Matrix: rows are tracks columns are scans');
+disp(b)
+
+n = MHTMatrixTreeConvert( b );
+TreeDiagram( n )
+    
+b = MHTMatrixTreeConvert( n );
+disp('MHT Matrix from tree')
+disp(b)
+    
+b = [	1     0     0;...
+      1     1     0;...
+      1     1     1;...
+      2     0     0;...
+      2     1     0;...
+      2     2     0;...
+      2     2     2;...
+      2     3     0;...
+      0     1     0;...
+      0     2     0;...
+      0     3     0;...
+      0     0     1;...
+      0     0     2];
+        
+disp('MHT Matrix: rows are tracks columns are scans');
+disp(b)
+n = MHTMatrixTreeConvert( b );
+
+TreeDiagram( n )
+    
+b = MHTMatrixTreeConvert( n );
+disp('MHT Matrix from tree')
+disp(b)

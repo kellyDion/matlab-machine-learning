@@ -1,11 +1,7 @@
 %% Gaussian Demo
-% Demonstrate an oscillator. 
-%% See also
-% RungeKutta, RHSOscillator, TimeLabel
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+% Shows the Gaussian PDF for different standard deviations.
+% Gaussian white noise is used to model noise in a wide variety of
+% problems.
 
 %% Initialize
 mu            = 2;           % Mean

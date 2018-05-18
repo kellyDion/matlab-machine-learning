@@ -1,9 +1,5 @@
 %% Test a recursive learning system
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 w   = rand(4,1); % Initial guess
 Z   = randn(4,4); 
 Y   = Z'*w;

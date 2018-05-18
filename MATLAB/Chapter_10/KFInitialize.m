@@ -1,10 +1,8 @@
 %% KFINITIALIZE Kalman Filter initialization
-
-%%  Form:
+%% Form
 %   d = KFInitialize( type, varargin )
 %
 %% Description
-
 %   Initializes Kalman Filter data structures for the KF, UKF,  EKF and
 %   UKFP, parameter update..
 %
@@ -24,10 +22,6 @@
 %
 %% References
 % None.
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = KFInitialize( type, varargin )
 

@@ -3,10 +3,6 @@
 %% See also
 % RungeKutta, RHSAircraft
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 %% Initialize
 nSim    = 2000;    % Number of time steps
 dT      = 0.1;      % Time step (sec)

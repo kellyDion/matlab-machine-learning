@@ -1,5 +1,5 @@
 %% KFUPDATE Linear Kalman Filter measurement update step.
-%%  Form:
+%% Form
 %   d = KFUpdate( d )
 %
 %% Description
@@ -24,10 +24,6 @@
 %
 %% References
 % None.
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = KFUpdate( d )
 

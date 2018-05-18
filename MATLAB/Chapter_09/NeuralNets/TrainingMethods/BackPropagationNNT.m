@@ -1,7 +1,6 @@
-function h = BackPropagationNNT( action, h, modifier )
 
-%% BackPropagationNNT Backpropagation training code for use with the Trainer
-%% Form:
+%% BACKPROPAGATIONNNT Backpropagation training code for use with the Trainer
+%% Form
 %   h = BackPropagationNNT( action, h, modifier )
 %% Inputs
 %   action      (1,:)  Action 'initialize', 'update'
@@ -9,12 +8,10 @@ function h = BackPropagationNNT( action, h, modifier )
 %   modifier    (1,4)  [left bottom width height]
 %
 %% Outputs
-%   h           (1,1)  The data
-%                             
-%
-%-------------------------------------------------------------------------------
+%   h           (.)    Updated data
 
-%% Copyright 1999, 2016 Princeton Satellite Systems, Inc. All rights reserved.
+function h = BackPropagationNNT( action, h, modifier )
+
 
 if( nargin < 1 )
   action = 'initializeGUI';

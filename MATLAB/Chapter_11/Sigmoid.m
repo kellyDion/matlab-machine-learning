@@ -2,10 +2,6 @@
 %% See also
 % PlotSet
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 %% Initialize
 x = linspace(-7,7);
 

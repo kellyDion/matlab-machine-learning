@@ -31,10 +31,6 @@
 %         .lY     (1,1)           Number of measurements
 %         .D    	(m,n)           Empty matrix
 %         .n      (1,1)           Number of sigma i
-%
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = UKFPWeight( d )
 

@@ -5,9 +5,6 @@
 % is the same size and divided at x = 2 and y = 2.
 % This is a simple test of a decision tree.
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 % Vertices
 v = [ 0 0;...

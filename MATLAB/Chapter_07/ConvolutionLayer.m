@@ -1,7 +1,7 @@
-%% CONVOLUTIONLAYER
-%
-%% Format
+%% CONVOLUTIONLAYER Convolution layer for a neural net
+%% Format:
 % y = ConvolutionLayer( x, d )
+% ConvolutionLayer;
 %
 %% Description 
 % Implements a fully connected neural network
@@ -19,10 +19,6 @@
 %
 %  y  (p,p) Outputs
 %
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function y = ConvolutionLayer( x, d )
 
@@ -51,17 +47,20 @@ for j = 1:mC
   end
 end
 
+%% ConvolutionLayer>>Neuron
 function y = Neuron( x, d, afun )
 %% Neuron function
 y = afun(x.*d.w + d.b);
 
+%% ConvolutionLayer>>DefaultDataStructure
 function d = DefaultDataStructure
-%% Default Data Structure
 
 d = struct('mask',ones(9,9),'w',rand(9,9),'b',rand(9,9),'aFun','tanh');
 
 function Demo
-%% Demo
+%% ConvolutionLayer>Demo
+% Show the convolution layer for a random 16x16 matrix using the 
+% default data structure.
 
 d       = DefaultDataStructure;
 x       = rand(16,16);

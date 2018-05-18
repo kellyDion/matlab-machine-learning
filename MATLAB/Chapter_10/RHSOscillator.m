@@ -26,12 +26,6 @@
 %% Outputs
 %  x       (2,1) State vector derivative d[r;v]/dt
 %
-%% References
-% None.
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function xDot = RHSOscillator( ~, x, d )
 

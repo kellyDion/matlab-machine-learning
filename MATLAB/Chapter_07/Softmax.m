@@ -1,6 +1,7 @@
-%% SOFTMAX
-%% Form:
-%   [p, pMax, kMax] = Softmax( q )
+%% SOFTMAX Finds maximum using the logistic function
+%% Form
+% [p, pMax, kMax] = Softmax( q )
+% Softmax % Demo
 %
 %% Description
 % Finds the maximum value using the logistic function.
@@ -14,21 +15,15 @@
 %   kMax (1,1)  Index of the maximum value
 %
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-
 function [p, pMax, kMax] = Softmax( q )
 
 % Demo
 if( nargin == 0 )
-  q = [1,2,3,4,1,2,3];
-  [p, pMax, kMax] = Softmax( q )
-  sum(p)
-  clear p
+  Demo
   return
 end
 
+q = reshape(q,[],1);
 n = length(q);
 p = zeros(1,n);
 
@@ -40,3 +35,8 @@ end
 
 [pMax,kMax] = max(p);
 
+function Demo
+%% Softmax>Demo
+q = [1,2,3,4,1,2,3];
+[p, pMax, kMax] = Softmax( q );
+sum(p)

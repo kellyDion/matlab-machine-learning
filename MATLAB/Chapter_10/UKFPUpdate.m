@@ -1,6 +1,6 @@
 
 %% UKFPUPDATE Unscented Kalman Filter parameter update step
-%%  Form:
+%%  Form
 %   d = UKFPUpdate( d )
 %
 %% Description
@@ -40,10 +40,6 @@
 %               Matthew C. VanDyke, Jana L. Schwartz, Christopher D. Hall,
 %               "UNSCENTED KALMAN FILTERING FOR SPACECRAFT ATTITUDE STATE AND
 %               PARAMETER ESTIMATION,"AAS-04-115.
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
 
 function d = UKFPUpdate( d )
 
@@ -88,7 +84,7 @@ function d = SigmaPoints( d )
 
 n         = 2:(d.L+1);
 m         = (d.L+2):(2*d.L + 1);
-etaM      = DupVect(d.eta,length(d.eta));
+etaM      = repmat(d.eta,length(d.eta));
 sqrtP     = chol(d.p);
 d.wA(:,1) = d.eta;
 d.wA(:,n) = etaM + d.gamma*sqrtP;

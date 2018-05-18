@@ -1,7 +1,7 @@
-%% ACTIVATION - Implement activation functions
-
-%% Format
+%% ACTIVATION Implement activation functions
+%% Form
 % s = Activation( type, x, k )
+% Activation % Demo
 %
 %% Description
 % Generates an activation function
@@ -16,10 +16,6 @@
 %
 %  s  (1,:) Output
 %
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function s = Activation( type, x, k )
 
@@ -44,10 +40,9 @@ switch lower(type)
     s = (1-exp(-k*x))./(1+exp(-k*x));
 end
 
-
 function Demo
-%% Demo
-
+%% Activation>Demo
+% Show different activation functions
 x	= linspace(-2,2);
 s	= [ Activation('elo',x);...
       Activation('tanh',x);...

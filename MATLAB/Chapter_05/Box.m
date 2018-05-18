@@ -1,9 +1,10 @@
-
-%% Draw a box centered at the origin.
+%% BOX Draw a box centered at the origin.
+%% Form
+%  [v, f] = Box( x, y, z, openFace )
+%  Box % Demo
 %
+%% Description
 % Type Box for a demo.
-%% Form:
-%   [v, f] = Box( x, y, z, openFace )
 %
 %% Inputs
 %   x           (1,1)  x length
@@ -13,11 +14,6 @@
 %% Outputs
 %   v           ( 8,3) Vertices
 %   f           (12,3) Faces
-%
-
-%% Copyright
-%   Copyright (c) 2001-2002 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function [v, f] = Box( x, y, z )
 
@@ -42,6 +38,9 @@ if( nargout == 0 )
 end
 
 function Demo
+%% Box>Demo
+% Draw a box
+
 x = 1;
 y = 2;
 z = 3;

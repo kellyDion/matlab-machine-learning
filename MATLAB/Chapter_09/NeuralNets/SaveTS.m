@@ -1,33 +1,23 @@
-function SaveTS( inputs, outputs, trainSets, testSets )
-
-%---------------------------------------------------------------------------
-%   Creates a training set *TS.mat file for use with the neural net trainer
-%---------------------------------------------------------------------------
-%   Form:
-%   SaveTS( inputs, outputs, trainSets, testSets )
-%---------------------------------------------------------------------------
-%
-%   ------
-%   Inputs
-%   ------
+%% SAVETS Convenience function for saving a NN training set.
+% Creates a training set *TS.mat file for use with the neural net trainer
+%% Form:
+%  SaveTS( inputs, outputs, trainSets, testSets )
+%% Inputs
 %   inputs    (:,n)   Sets of inputs to neural network. Each column is another set
 %   outputs   (:,n)   Desired network outputs for each input set
 %   trainSets (:)     Sets used for network training
 %   testSets  (:)     Sets used for network testing
 %
-%   -------
-%   Outputs
-%   -------
-%
-%---------------------------------------------------------------------------
+%% Outputs
+% None
 
-%---------------------------------------------------------------------------
-%   Copyright 1999 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%---------------------------------------------------------------------------
+%% Copyright 
+% Copyright (c) 1999, 2016 Princeton Satellite Systems, Inc.
+% All rights reserved.
+
+function SaveTS( inputs, outputs, trainSets, testSets )
 
 % Input processing
-%-----------------
 if( nargin < 3 )
   trainSets = [];
 end;
@@ -39,7 +29,6 @@ end;
 testSets = testSets(:)';
 
 % Inputs and outputs must have same number of columns
-%----------------------------------------------------
 cIn  = size(inputs,2);
 cOut = size(outputs,2);
 
@@ -48,9 +37,7 @@ if( cIn ~= cOut )
 end;
 
 % Testing and training sets must be positive integers
-%----------------------------------------------------
 if( ~isempty(trainSets) )
-
   j = find( abs( rem(trainSets,1) ) > eps, 1 );
   if( ~isempty(j) )
     error('The training set indices must all be integers');
@@ -63,11 +50,9 @@ if( ~isempty(trainSets) )
   if( max(trainSets) > cIn )
     error('The maximum training set index must be less than the number of input/output sets (columns)');
   end;
-
 end;
 
 if( ~isempty(testSets) )
-
   j = find( abs( rem(testSets, 1) ) > eps, 1 );
   if( ~isempty(j) )
     error('The testing set indices must all be integers');
@@ -80,11 +65,9 @@ if( ~isempty(testSets) )
   if( max(testSets) > cIn )
     error('The maximum testing set index must be less than the number of input/output sets (columns)');
   end;
-
 end;
 
 % Save the training set
-%----------------------
 [filename, pathname] = uiputfile(['*TS.mat'],'Save As');
 if ~ischar(filename) || ~ischar(pathname)
   error('Must enter filename');

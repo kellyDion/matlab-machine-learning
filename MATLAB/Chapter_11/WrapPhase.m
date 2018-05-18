@@ -1,19 +1,14 @@
-
-%% WRAPPHASE
-%   Wrap a phase angle (or vector of angles) to keep it between -pi and +pi
-%% Form:
-%   angle = WrapPhase( angle )
+%% WRAPPHASE Wrap phase angle
+% Wrap a phase angle (or vector of angles) to keep it between -pi and +pi
+%% Form
+%  angle = WrapPhase( angle )
 %
 %% Inputs
-%   angle            (1,:)    Phase angle [rad]
+%  angle            (1,:)    Phase angle [rad]
 %
 %% Outputs
-%   angle            (1,:)    Wrapped phase angle between -pi and +pi [rad]
-%
+%  angle            (1,:)    Wrapped phase angle between -pi and +pi [rad]
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function angle = WrapPhase( angle )
 

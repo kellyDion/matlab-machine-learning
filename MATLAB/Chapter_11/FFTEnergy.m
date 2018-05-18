@@ -1,11 +1,12 @@
 
-%% FFTENERGY 
+%% FFTENERGY FFT Energy signature
+%% Form
+%   [e, w, wP] = FFTEnergy( y, tSamp, aPeak )
+%
+%% Description
 % FFT of the input signal converted to energy.
 % The resolution in frequency will depend on the number of samples
 % and the sampling period.
-%
-%% Form:
-%   [e, w, wP] = FFTEnergy( y, tSamp, aPeak )
 %
 %% Inputs
 %   y     (1,n) Sequence
@@ -17,10 +18,6 @@
 %   w     (1,n)  Frequencies (rad/sec)
 %   wP    (1,:)  Frequencies of peaks  (rad/sec)
 %
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
 
 function [e, w, wP] = FFTEnergy( y, tSamp, aPeak )
 

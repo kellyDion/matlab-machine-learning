@@ -1,7 +1,10 @@
 %% AUTOMOBILEINITIALIZE Initialize the automobile data structure.
-% Initializes the data structure using parameter pairs.
-%% Form:
+%
+%% Form
 %  d = AutomobileInitialize( varargin )
+%
+%% Description
+% Initializes the data structure using parameter pairs.
 %
 %% Inputs
 % varargin:  ('parameter',value,...)
@@ -23,9 +26,6 @@
 %% Outputs
 %   d	(.)  Data structure
 
-%% Copyright
-%	Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function d = AutomobileInitialize( varargin )
 

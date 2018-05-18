@@ -1,12 +1,12 @@
 %% UKFSim
-% Demonstrate an Unscented Kalman Filter. 
+% Demonstrate an Unscented Kalman Filter. The model is an oscillator. The
+% measurement is the angle between the line of sight from a sensor
+% and the horizon. This measurement is nonlinear. The UKF can handle
+% nonlinear measurements directly. The dynamical model is linear.
+%
 %% See also
 % RungeKutta, RHSOscillator, TimeLabel, KFInitialize, UKFUpdate, UKFPredict
-% AngleMeasurement
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+% AngleMeasurement, KFSim, PlotSet
 
 %% Initialize
 nSim            = 5000;             % Simulation steps

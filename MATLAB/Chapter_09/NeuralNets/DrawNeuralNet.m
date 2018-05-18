@@ -1,5 +1,15 @@
-%% DrawNeuralNet
-% Draw the neural network.
+%% DRAWNEURALNET Draw a neural network.
+% Create a new figure and draw the nodes of the neural network with connecting
+% lines.
+%% Form
+% DrawNeuralNet( network )
+%% Inputs
+%  network   (.)   Network data structure
+%                  .layer (:)  Struct array
+
+%% Copyright 
+% Copyright (c) 2016 Princeton Satellite Systems, Inc.
+% All rights reserved.
 
 function DrawNeuralNet( network )
 
@@ -7,14 +17,13 @@ plotWeights = true;
 plotThresh = true;
 plotNeurons = true;
 
-figure;
+figure('Name','DrawNeuralNet');
 
 green = [0 0.7 0];
 blue  = [0 0   1];
 red   = [1 0   0];
 
 % Find max number of nodes
-%-------------------------
 [outputs,inputs] = size( network.layer(1,1).w );
 maxNodes = inputs;
 nLayers = length(network.layer);
@@ -29,12 +38,10 @@ yLim = [0 maxNodes+1];
 xLim = [-1 nLayers+1];
 
 % Clear and prepare axes
-%-----------------------
 axis ij;
 hold on;
 
 % Compute input locations
-%------------------------
 xPlot(1).x = zeros(inputs,1);
 
 if( inputs == maxNodes )
@@ -48,7 +55,6 @@ xPlot(1).y     = xPlot(1).y(:);
 xPlot(1).color = ones(length(xPlot(1).y),1)*green;
 
 % Compute node locations
-%-----------------------
 for j = 1:nLayers
   [outputsJ,inputsJ] = size( network.layer(j,1).w );
   xPlot(j+1).x = j*ones(outputsJ,1);
@@ -71,7 +77,6 @@ for j = 1:nLayers
 end;
 
 % Plot inputs
-%------------
 plot( xPlot(1).x, xPlot(1).y, 'o', 'Color', green );
 plot( xPlot(1).x, xPlot(1).y, 'x', 'Color', green );
 
@@ -84,7 +89,6 @@ for j = 2:nLayers+1
 end;
 
 % Plot neurons
-%-------------
 if( plotNeurons )
   
   xLim = [-0.5 xLim(2)];
@@ -106,7 +110,6 @@ if( plotNeurons )
   end;
   
   % Plot outputs
-  %-------------
   xPlot(nLayers+2).y = xPlot(nLayers+1).y;
   xPlot(nLayers+2).x = xPlot(nLayers+1).x + 0.5;
   plot( xPlot(nLayers+2).x, xPlot(nLayers+2).y, 'mx')
@@ -119,7 +122,6 @@ if( plotNeurons )
 end;
 
 % Clean up plot
-%--------------
 axis([xLim yLim]);
 set(gca, 'XTick', 0:nLayers);
 set(gca, 'YTick', 1:maxNodes);

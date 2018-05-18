@@ -1,12 +1,11 @@
-
-%% PID
-%% Form:
-%   [a, b, c, d, k] = PID( zeta, omega, tauInt, omegaR, tSamp )
+%% PID Proportional Integral Derivative controller.
+%% Form
+%  [a, b, c, d, k] = PID( zeta, omega, tauInt, omegaR, tSamp )
 %
 %% Description
 % Produces a state space Proportional Integral Derivative (PID) controller.
 %
-% The PID controller will be of the form:
+% The PID controller will be of the form
 %
 % x(k+1) = a x(k) + b u(k)
 % y(k)   = c x(k) + d u(k)
@@ -42,10 +41,8 @@
 %   c       (1,2)	Output matrix
 %   d       (1,1)	Feedthrough matrix
 %
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
+%% See also:
+% PID>Demo
 
 function [a, b, c, d] = PID(  zeta, omega, tauInt, omegaR, tSamp )
 
@@ -89,7 +86,12 @@ if( nargin > 4 )
 end
 
 function Demo
-%% Demo
+%% PID>Demo
+% Create and discretize a double integrator plant with a 0.1 second timestep,
+% design the PID controller, run a simulation for 2000 steps, and generate
+% plots.
+%
+% See also CToDZOH, TimeLabel, PlotSet
 
 % The double integrator plant
 dT            = 0.1; % s

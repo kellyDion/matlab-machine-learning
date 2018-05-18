@@ -1,5 +1,6 @@
-%% COMBINATIONS
-
+%% COMBINATIONS Enumerates the number of combinations
+%% Form
+%  c = Combinations( r, k )
 % Enumerates the number of combinations of a series r taken k at a time.
 % Calls itself recursively
 
@@ -49,6 +50,7 @@ else
 end
 c = [c;r(end-k+1:end)];
 
+%% Combinations>> NumberOfCombinations
 function j = NumberOfCombinations(n,k)
-%% Compute the number of combinations
+% Compute the number of combinations
 j = factorial(n)/(factorial(n-k)*factorial(k));

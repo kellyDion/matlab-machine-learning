@@ -1,28 +1,18 @@
-function NeuralNetDeveloper( action, modifier )
-
+%% NEURALNETDEVELOPER This function builds, trains, and simulates simple neural nets.
+%% Form
+%  NeuralNetDeveloper( action, modifier  )
 %-------------------------------------------------------------------------------
-%   This function builds, trains, and simulates simple neural nets.
-%-------------------------------------------------------------------------------
-%   Form:
-%   NeuralNetDeveloper( action, modifier  )
-%-------------------------------------------------------------------------------
-%
-%   ------
-%   Inputs
-%   ------
+%% Inputs
 %   action          (1,:)   Action to be taken by the developer (used mostly
 %                           for callbacks)
-%
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   None
-%
-%-------------------------------------------------------------------------------
 
-%-------------------------------------------------------------------------------
-%   Copyright 1998,1999 Princeton Satellite Systems, Inc. All rights reserved.
-%-------------------------------------------------------------------------------
+%% Copyright
+% Copyright (c) 1998,1999, 2016 Princeton Satellite Systems, Inc. 
+% All rights reserved.
+
+function NeuralNetDeveloper( action, modifier )
 
 % Initialize the Neural Net Developer
 %------------------------------------
@@ -103,7 +93,6 @@ height  = 500;
 width   = 540;
 bottom  = p(4) - height-200;
 ltgreen = [0.9 1 0.9];
-bColor  = [1 1 1];
 h.fig   = figure('name','Neural Net Developer','Units','pixels',...
                  'Position',[40 bottom width height ],'color',ltgreen,...
                  'NumberTitle','off','Tag', 'Neural Net Developer',...
@@ -152,8 +141,8 @@ frameProps(5:8)    = {'Style','frame','BackgroundColor',bColor};
 displayProps       = labelProps;
 displayProps(7:10) = {'BackgroundColor',defaultColor,'FontName','helvetica'};
 
-buttonProps        = labelProps(1:14);
-buttonProps(5:8)   = {'Style','pushbutton','BackgroundColor',defaultColor};
+% buttonProps        = labelProps(1:14);
+% buttonProps(5:8)   = {'Style','pushbutton','BackgroundColor',defaultColor};
 
 switch action
   case 'initialize'
@@ -484,7 +473,7 @@ switch action
   case 'nodes'
 
     n  = get(h.dispLayer,'Val');
-    sx = get(h.layerNodes,'String');
+    %sx = get(h.layerNodes,'String');
 
     % Set up data structure of valid input parameters
     %------------------------------------------------
@@ -569,8 +558,8 @@ menuProps(5:10)    = {'Style','popupmenu','BackgroundColor',defaultColor,'FontNa
 frameProps         = labelProps(1:14);
 frameProps(5:8)    = {'Style','frame','BackgroundColor',bColor};
 
-displayProps       = labelProps;
-displayProps(7:10) = {'BackgroundColor',defaultColor,'FontName','helvetica'};
+% displayProps       = labelProps;
+% displayProps(7:10) = {'BackgroundColor',defaultColor,'FontName','helvetica'};
 
 buttonProps        = labelProps(1:14);
 buttonProps(5:8)   = {'Style','pushbutton','BackgroundColor',defaultColor};
@@ -674,7 +663,7 @@ switch action
   case 'threshold'
     j = get(h.dispLayer,'Val');
     n = get(h.dispNode, 'Val');
-    sx = get(h.nodeThresh, 'String');
+    %sx = get(h.nodeThresh, 'String');
 
     % Set up data structure of valid input parameters
     %------------------------------------------------
@@ -785,7 +774,7 @@ end
 %---------------------------------------------------------------------------
 function h = Topology( action, h )
 
-defaultColor = [0.7333 0.7333 0.7333];
+%defaultColor = [0.7333 0.7333 0.7333];
 bColor       = [0.96 0.96 0.96];
 white        = [1 1 1];
 ltgreen      = [0.9 1 0.9];
@@ -797,11 +786,11 @@ labelProps         = {'Parent',h.fig,'Units','pixels','Style','text', ...
 editProps          = labelProps;
 editProps(5:10)    = {'Style','edit','BackgroundColor',white,'FontName','Helvetica'};
 
-frameProps         = labelProps(1:14);
-frameProps(5:8)    = {'Style','frame','BackgroundColor',bColor};
-
-sliderProps        = {'Parent',h.fig,'Units','pixels','Style','slider', ...
-                      'Max',1,'Min',0,'Value',0};
+% frameProps         = labelProps(1:14);
+% frameProps(5:8)    = {'Style','frame','BackgroundColor',bColor};
+% 
+% sliderProps        = {'Parent',h.fig,'Units','pixels','Style','slider', ...
+%                       'Max',1,'Min',0,'Value',0};
 switch action
   case 'initialize'
 
@@ -870,7 +859,7 @@ switch action
     % Compute node locations
     %-----------------------
     for j = 1:h.network.layers
-      xPlot(j+1).x = j*ones(h.network.layer(j,1).outputs,1);
+      xPlot(j+1).x = j*ones(h.network.layer(j,1).outputs,1); %#ok<*AGROW>
 
       if( h.network.layer(j,1).outputs == maxNodes )
         xPlot(j+1).y = 1:h.network.layer(j,1).outputs;
@@ -965,11 +954,11 @@ end
 %---------------------------------------------------------------------------
 function h = Train( action, h )
 
-defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
-pink         = [1 0.9 0.9];
-ltblue       = [0.9 0.9 1];
+% defaultColor = [0.7333 0.7333 0.7333];
+% bColor       = [0.96 0.96 0.96];
+% white        = [1 1 1];
+% pink         = [1 0.9 0.9];
+% ltblue       = [0.9 0.9 1];
 blue         = [0.7 0.7 1];
 
 buttonProps  = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
@@ -978,7 +967,7 @@ buttonProps  = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
 
 switch action
   case 'initialize'
- 	  p       = get( h.fig, 'position' );
+ 	  %p       = get( h.fig, 'position' );
 	  h.train = uicontrol( buttonProps{:},...
                         'Position',[365 150 80 60],...
 	                      'String', 'Train',...
@@ -1009,8 +998,8 @@ end
 function h = Simulate( action, h )
 
 defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
+% bColor       = [0.96 0.96 0.96];
+% white        = [1 1 1];
 
 buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                       'BackgroundColor',defaultColor,'FontName','Helvetica', ...
@@ -1018,7 +1007,7 @@ buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
 
 switch action
   case 'initialize'
- 	  p          = get( h.fig, 'position' );
+ 	  %p          = get( h.fig, 'position' );
 	  h.sim      = uicontrol( buttonProps{:},...
                            'Position',[365 70 80 60],...
 	                         'String', 'Simulate',...
@@ -1040,8 +1029,8 @@ end
 function h = New( action, h )
 
 defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
+% bColor       = [0.96 0.96 0.96];
+% white        = [1 1 1];
 
 buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                       'BackgroundColor',defaultColor,'FontName','Helvetica', ...
@@ -1049,7 +1038,7 @@ buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
 
 switch action
   case 'initialize'
- 	  p      = get( h.fig, 'position' );
+ 	  %p      = get( h.fig, 'position' );
 	  h.new  = uicontrol( buttonProps{:},...
                        'Position',[ 460 200 80 40 ],...
 	                     'String', 'New',...
@@ -1077,8 +1066,6 @@ end
 function h = Open( action, h )
 
 defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
 
 buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                       'BackgroundColor',defaultColor,'FontName','Helvetica', ...
@@ -1086,20 +1073,21 @@ buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
 
 switch action
   case 'initialize'
- 	  p          = get( h.fig, 'position' );
 	  h.open     = uicontrol( buttonProps{:},...
                            'Position',[460 150 80 40],...
 	                         'String', 'Open',...
                            'Callback', Callback2('open','open'));
   case 'open'
-    [filename, pathname] = uigetfile([h.network.path '*.mat'],'Choose a file');
-    if ~ischar(filename) | ~ischar(pathname)
+    [filename, pathname] = uigetfile({'*.mat','MAT-files';...
+                                      [h.network.path '*.mat'],'Networks'},...
+                                      'Choose a file');
+    if ~ischar(filename) || ~ischar(pathname)
       return
     end     
     fname = fullfile(pathname, filename);
-    eval(['temp = load(''' fname ''');']);
-    s = findstr(filename, '.mat');
-    eval(['h.network = temp.' filename(1:s-1) ';']);
+    temp = load(fname);
+    s = strfind(filename, '.mat');
+    h.network = temp.(filename(1:s-1));
     clear temp
     set(h.fig,'Name',['Neural Net Developer: ' filename(1:s-1)])
     h.saved = 1;
@@ -1117,8 +1105,8 @@ end
 function h = Save( action, h )
 
 defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
+% bColor       = [0.96 0.96 0.96];
+% white        = [1 1 1];
 
 buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                       'BackgroundColor',defaultColor,'FontName','Helvetica', ...
@@ -1126,7 +1114,7 @@ buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                         
 switch action
   case 'initialize'
- 	  p          = get( h.fig, 'position' );
+%  	  p          = get( h.fig, 'position' );
 	  h.save     = uicontrol( buttonProps{:},...
                            'Position',[460 100 80 40],...
 	                         'String', 'Save',...
@@ -1139,7 +1127,7 @@ switch action
       return
     end
     h.network.path = pathname;
-    [~,name,ext] = fileparts(filename);
+    [~,name] = fileparts(filename);
     set(h.path,'string',pathname)
     eval([name ' = h.network;'])
     fname = fullfile(pathname, filename);
@@ -1154,9 +1142,9 @@ end
 %---------------------------------------------------------------------------
 function h = Quit( action, h )
 
-defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
+% defaultColor = [0.7333 0.7333 0.7333];
+% bColor       = [0.96 0.96 0.96];
+% white        = [1 1 1];
 red          = [0.95 0.2 0.25];
   
 buttonProps        = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
@@ -1200,11 +1188,7 @@ end
 %---------------------------------------------------------------------------
 function h = Help( action, h )
 
-defaultColor = [0.7333 0.7333 0.7333];
-bColor       = [0.96 0.96 0.96];
-white        = [1 1 1];
 green        = [0.25 0.9 0.25];
-yellow       = [1 1 0.6];
   
 buttonProps  = {'Parent',h.fig,'Units','pixels','Style','pushbutton',...
                 'BackgroundColor',green,'FontName','Helvetica', ...
@@ -1215,6 +1199,7 @@ switch action
     h.help = uicontrol( buttonProps{:},...
                        'Position',[460 0 80 40],...
                        'String','HELP',...
+                       'enable','off',...
                        'Callback', Callback2( 'help','get help'));
                        
   case 'get help'
@@ -1225,7 +1210,7 @@ end
 %---------------------------------------------------------------------------
 %   Preferences button and window
 %---------------------------------------------------------------------------
-function h = Preferences( action, h, modifier )
+function h = Preferences( action, h )
 
 defaultColor = [0.7333 0.7333 0.7333];
 bColor       = [0.96 0.96 0.96];
@@ -1255,17 +1240,15 @@ switch action
     % Load saved preferences if they exist
     %-------------------------------------
     if( exist('NNPreferences.mat','file') )
-      load('NNPreferences');
+      vars = load('NNPreferences');
 
-      names = fieldnames( nnPref );
+      names = fieldnames( vars.nnPref );
       for j = 1:length(names)
-        eval(['h.preferences.' names{j} ' = nnPref.' names{j} ';']);
-      end;
+        h.preferences.(names{j}) = vars.nnPref.(names{j});
+      end
 
       tempPath            = fileparts( which('NNPreferences.mat') );
       h.preferences.file  = fullfile(tempPath,'NNPreferences');
-
-      clear nnPref, tempPath;
 
     else
       w = what('NeuralNets');
@@ -1304,7 +1287,7 @@ switch action
     if( isempty(h.prefFig) )
       h.preferences.newPref = 0;
 
-      p1         = get( h.pref, 'position' );
+%       p1         = get( h.pref, 'position' );
       p2         = get( h.fig, 'position' );
       p(1)       = p2(1) + 50;
       p(2)       = p2(2) - 20;
@@ -1335,8 +1318,8 @@ switch action
       frameProps           = labelProps(1:14);
       frameProps(5:8)      = {'Style','frame','BackgroundColor',bColor};
 
-      displayProps         = labelProps;
-      displayProps(7:10)   = {'BackgroundColor',defaultColor,'FontName','helvetica'};
+%       displayProps         = labelProps;
+%       displayProps(7:10)   = {'BackgroundColor',defaultColor,'FontName','helvetica'};
 
       buttonProps          = labelProps(1:14);
       buttonProps(5:8)     = {'Style','pushbutton','BackgroundColor',defaultColor};
@@ -1865,7 +1848,7 @@ switch action
 
     % Verify layer
     %-------------
-    if( isempty(n) | (n<1) | (n>h.network.layers) )
+    if( isempty(n) || (n<1) || (n>h.network.layers) )
       errordlg({'Non-existent layer'});
       return;
     end;
@@ -1875,7 +1858,7 @@ switch action
 
     % Verify nodes
     %-------------
-    if( (x(1) < 1) | (x(deleteNodes) > h.network.layer(n,1).outputs) )
+    if( (x(1) < 1) || (x(deleteNodes) > h.network.layer(n,1).outputs) )
       errordlg({'Non-existent node'});
       return;
     end;
@@ -1896,7 +1879,7 @@ switch action
 
     % Verify layer
     %-------------
-    if( isempty(n) | (n<1) | (n>h.network.layers) )
+    if( isempty(n) || (n<1) || (n>h.network.layers) )
       errordlg({'Non-existent layer'});
       return;
     end;
@@ -2069,7 +2052,7 @@ end
 
 % If no file is specified bring up the GUI
 %-----------------------------------------
-if( isempty(path) | isempty(file) )
+if( isempty(path) || isempty(file) )
   [file, path] = uigetfile(['*.' suffix]', name); 
   if( file == 0 )
 		fid = -1;
@@ -2078,25 +2061,25 @@ if( isempty(path) | isempty(file) )
   end
 end
 
-k = findstr(file,'.');
+k = strfind(file,'.');
 if( isempty(k) )
   g    = file;
   file = [file '.d'];
 else
-  g    = file(1:(findstr(file,'.')-1));
+  g    = file(1:(strfind(file,'.')-1));
 end
 
 if( isempty(path) )
   path = currentPath;
 end
 
-eval(['cd ''',path '''']);
+cd(path);
  
-[fid ,message] = fopen(file,'r');
+fid = fopen(file,'r');
 if( fid == -1 )
   g = [];
   return;
 end
 
-eval(['cd ''',currentPath,'''']);
+cd(currentPath);
 

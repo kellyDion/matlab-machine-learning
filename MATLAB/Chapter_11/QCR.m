@@ -1,7 +1,9 @@
 
-%% QCR
-% Creates a regulator from a state space system.
-% 
+%% QCR Creates a regulator from a state space system.
+%% Form
+% k = QCR( a, b, q, r )
+%
+%% Description
 % Create a regulator of the form
 % u = -kx minimizing the cost functional
 % J = †{(1/2)[u'ru + x'qx].
@@ -10,8 +12,6 @@
 % .
 % x = ax + bu
 %
-%% Form:
-% k = QCR( a, b, q, r )
 %
 %% Inputs
 %   a     (n,n) Plant matrix
@@ -24,12 +24,8 @@
 %
 %% Reference
 %	Franklin, G.F., J.D. Powell, M.L. Workman, Digital Control
-% of Dynamic Systems, 2nd Edition, Addison-Wesley, 1990,
-% pp. 435-438.
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+%   of Dynamic Systems, 2nd Edition, Addison-Wesley, 1990,
+%   pp. 435-438.
 
 function k = QCR( a, b, q, r )
 

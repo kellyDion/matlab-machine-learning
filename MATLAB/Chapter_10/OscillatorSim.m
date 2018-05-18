@@ -1,11 +1,8 @@
 %% Oscillator Demo
-% Demonstrate an oscillator. 
+% Demonstrate an oscillator. This is a linear spring and damper. The
+% measurement is the angle between the mass and the horizon.
 %% See also
-% RungeKutta, RHSOscillator, TimeLabel
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+% RungeKutta, RHSOscillator, TimeLabel, PlotSet
 
 %% Initialize
 nSim          = 1000;           % Simulation end time (sec)

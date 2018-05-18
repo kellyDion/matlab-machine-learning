@@ -16,10 +16,6 @@
 %% References
 % None.
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function y = AngleMeasurement( x, d )
 
 if( nargin < 1 )

@@ -1,4 +1,8 @@
-%% AUTORADAR
+%% AUTORADAR Models automotive radar for simulation
+%% Form
+%   [y, v] = AutoRadar( x, d )
+%
+%% Description
 %   Automotive (2D) radar.
 %
 %   Returns azimuth, range and range rate. The state vector may be
@@ -27,8 +31,6 @@
 %
 %   Type AutoRadar for a demo. The tracked car is oscillating about 
 %   the y position.
-%% Form:
-%   [y, v] = AutoRadar( x, d )
 %
 %% Inputs
 %   x	(:,n)   States may be any order.
@@ -51,10 +53,6 @@
 %   y	(3*m,1)	Measurements [range;range rate; azimuth] (m, m/s, rad)
 %   v   (m,1)   1 if the measurement is valid, 0 if it not valid
 %
-
-%% Copyright
-%	Copyright (c) 2013, 2016 Princeton Satellite Systems, Inc.
-%	All rights reserved.
 
 function [y, v] = AutoRadar( x, d )
 
@@ -124,6 +122,7 @@ if( nargout < 1 )
   clear y
 end
 
+%% AutoRadar>>DataStructure
 function d = DataStructure
 %% Default data structure
 d.kR        = [1;2];
@@ -138,8 +137,10 @@ d.maxRange	= 60;
 d.noLimits  = 1;
 d.t         = [];
 
+%% AutoRadar>>Demo
 function Demo
-%% Demo
+% Shows radar performance as range changes
+
 omega       = 0.02;
 d           = DataStructure;
 n           = 1000;

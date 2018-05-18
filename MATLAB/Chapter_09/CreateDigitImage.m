@@ -1,22 +1,30 @@
-%% CreateDigitImage Create an image of a single digit.
+%% CREATEDIGITIMAGE Create an image of a single digit.
 % Create a 16x16 pixel image of a single digit. The intermediate figure used to
 % display the digit text is invisible.
+%% Form
+%  pixels = CreateDigitImage( num, fontname )
+%% Inputs
+%  num      (1,1)    Digit to make a picture of
+%  fontname (1,:)    Name of desired system font
+%% Outputs
+%  pixels   (16,16)  Pixelmap of the digit
 
 %% Copyright
 % Princeton Satellite Systems, 2016
+
 function pixels = CreateDigitImage( num, fontname )
 
 if nargin < 1
-  num = 1;
+  num = 0;
   CreateDigitImage( num );
   return;
 end
 if nargin < 2
-  fontname = 'times';
+  fontname = 'courier';
 end
 
 fonts = listfonts;
-avail = strcmp(fontname,fonts);
+avail = strcmpi(fontname,fonts);
 if ~any(avail)
   error('MachineLearning:CreateDigitImage',...
     'Sorry, the font ''%s'' is not available.',fontname);
@@ -26,8 +34,9 @@ f = figure('Name','Digit','visible','off');
 a1 = axes( 'Parent', f, 'box', 'off', 'units', 'pixels', 'position', [0 0 16 16] );
 
 % 20 point font digits are 15 pixels tall (on Mac OS)
-text(a1,4,11,num2str(num),'fontsize',20,'fontunits','pixels','unit','pixels',...
- 'fontname','cambria')
+% text(axes,x,y,string)
+text(a1,4,10,num2str(num),'fontsize',19,'fontunits','pixels','unit','pixels',...
+ 'fontname',fontname)
 
 % Obtain image data using print and convert to grayscale
 cData = print('-RGBImage','-r0'); 

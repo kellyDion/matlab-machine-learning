@@ -27,14 +27,14 @@
 %                .delta   	(1,1) Elevator angle (rad)
 %
 %% Outputs
-%  x       (5,1) State vector d[u;w;q;theta;h]/dt
+%  xDot     (5,1) State vector d[u;w;q;theta;h]/dt
+%  lift     (1,1) Lift force (N)
+%  drag     (1,1) Drag force (N)
+%  pD       (1,1) Dynamic pressure (N/m^2)
 %
 %% References
 % None.
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function [xDot, lift, drag, pD] = RHSAircraft( ~, x, d )
 

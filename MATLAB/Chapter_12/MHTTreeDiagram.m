@@ -1,9 +1,12 @@
-function MHTTreeDiagram( tracks, w, update )
 
-%--------------------------------------------------------------------------
-%   Generates a tree diagram for MHT tracks.
+%% MHTTREEDIAGRAM Generates a tree diagram for MHT tracks.
+%%  Form
+%   MHTTreeDiagram( n, w, update )
 %
-%   w is optional, the defaults are:
+%% Description
+% Generates a tree diagram for MHT tracks.
+%
+% w is optional, the defaults are:
 %
 %       .name      = 'Tree';
 %       .width     = 400;
@@ -13,15 +16,9 @@ function MHTTreeDiagram( tracks, w, update )
 %       .linecolor = 'r';
 %       .rootSizeRatio = 1.5;
 %
-%   Type MHTTreeDiagram for a demo using a matrix input.
-%--------------------------------------------------------------------------
-%   Form:
-%   MHTTreeDiagram( n, w, update )
-%--------------------------------------------------------------------------
+% Type MHTTreeDiagram for a demo using a matrix input.
 %
-%   ------
-%   Inputs
-%   ------
+%% Inputs
 %   tracks    (.)   Data structure array of track information, OR:
 %             {:}   Cell array of tree node data, OR:
 %            (:,:)  Matrix of track data with track IDs in first column
@@ -36,17 +33,11 @@ function MHTTreeDiagram( tracks, w, update )
 %                   .rootSizeRatio (1,1)
 %   update   (1,1)  If entered update an existing plot
 %
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   None
 %
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2012 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function MHTTreeDiagram( tracks, w, update )
 
 persistent figHandle axTree
 
@@ -425,11 +416,3 @@ d.scan    = -1;
 d.meas    = -1;
 d.score   = -1;
 d.trackScore = -1;      
-
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-09-16 15:04:54 -0400 (Fri, 16 Sep 2016) $
-% $Revision: 43216 $
-

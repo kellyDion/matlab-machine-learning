@@ -1,6 +1,6 @@
 
 %% UKFWEIGHT Unscented Kalman Filter weight calculation
-%%  Form:
+%%  Form
 %   d = UKFWeight( d )
 %
 %% Description
@@ -32,10 +32,6 @@
 %               .c      (1,1)           Scaling constant
 %               .lambda	(1,1)           Scaling constant
 %
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = UKFWeight( d )
 

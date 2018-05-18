@@ -1,6 +1,9 @@
-
-%% MHTTrackMgmt
-% Manage Track Oriented Multiple Hypothesis Testing tracks.
+%% MHTTRACKMGMT Perform track reduction and track pruning
+%% Form
+%   [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, d, scan, t )
+%
+%% Description
+% Manage Track-Oriented Multiple Hypothesis Testing tracks.
 %
 % Performs track reduction and track pruning. 
 %
@@ -25,34 +28,32 @@
 % For real time systems y would be read in from your sensors. The MHT
 % code would update every time you received new measurements.
 %
-% zScan = [];
+%  zScan = [];
 %   
-% for k = 1:n
-%
-%  zScan = AddScan( y(:,k), [], [], [], zScan ) ;
+%  for k = 1:n
+%    zScan = AddScan( y(:,k), [], [], [], zScan ) ;         
+%    [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, trkData, k, t );
 %            
-%  [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, trkData, k, t );
-%            
-%  MHTGUI(trk,sol);
+%    MHTGUI(trk,sol);
 %           
-%  for j = 1:length(trk)
-%    trkData.fScanToTrackData.v =  myData
-%  end
-%
-%  if( ~isempty(zScan) && makePlots )
-%    TOMHTTreeAnimation( 'update', trk );
-%  end
+%    for j = 1:length(trk)
+%      trkData.fScanToTrackData.v =  myData
+%    end
+%    if( ~isempty(zScan) && makePlots )
+%      TOMHTTreeAnimation( 'update', trk );
+%    end
 %   
-%  t = t + dT;
-%
-%	end
+%    t = t + dT;
+%	 end
 %
 % The reference provides good background reading but the code in this
 % function is not based on the reference. Other good references are 
 % books and papers by Blackman.
 %
-%% Form:
-%   [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, d, scan, t )
+% To run this software you will need GLPK.
+% You will need glpk.m and its associated mex file for your machine. For
+% example, for a Mac you need the mex file glpkcc.mexmaci64. For more
+% information https://www.gnu.org/software/glpk/
 %
 %% Inputs
 %   b        (m,n)  [scans, tracks]
@@ -73,10 +74,6 @@
 % G. Karaseitanidis1, "Multiple Hypothesis Tracking
 % Implementation," www.intechopen.com.
 
-%% Copyright
-%   Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-
 function [b, trk, sol, hyp] = MHTTrackMgmt( b, trk, zScan, d, scan, t )
 
 % Warn the user that this function does not have a demo
@@ -95,7 +92,7 @@ end
 % Remove tracks with an old scan history
 earliestScanToKeep = scan-d.nScan;
 keep = zeros(1,length(trk));
-for j=1:length(trk);
+for j=1:length(trk)
   if( isempty(trk(j).scanHist) || max(trk(j).scanHist)>=earliestScanToKeep )
     keep(j) = 1;
   end
@@ -117,18 +114,16 @@ for j=1:nTrk
 end
 
 % Above removal of old entries could result in duplicate tracks
-%--------------------------------------------------------------
 dup = CheckForDuplicateTracks( trk, d.removeDuplicateTracksAcrossAllTrees );
 trk = RemoveDuplicateTracks( trk, dup, scan );
 nTrk = length(trk);
 
 % Perform the Kalman Filter prediction step
-%------------------------------------------
 for j = 1:nTrk
 	trk(j).filter	= feval( d.predict, trk(j).filter );
 	trk(j).mP       = trk(j).filter.m;
 	trk(j).pP       = trk(j).filter.p;
-    trk(j).m        = trk(j).filter.m;
+	trk(j).m        = trk(j).filter.m;
 	trk(j).p        = trk(j).filter.p;
 end
 
@@ -141,58 +136,55 @@ end
 %
 % Assign to a track. If one measurement is within the gate we just assign
 % it. If more than one we need to create a new track
-nNew        = 0;
+nNew      = 0;
 newTrack	= [];
-newScan     = [];
-newMeas     = [];
-nS          = length(zScan);
+newScan   = [];
+newMeas   = [];
+nS        = length(zScan);
 
 maxID = 0;
 maxTag = 0;
 for j = 1:nTrk
 	trk(j).d = zeros(1,nS);
-    trk(j).new = [];
+	trk(j).new = [];
 	for i = 1:nS
-        trk(j).filter.x = trk(j).m;
-        trk(j).filter.y = zScan(i);
-        trk(j).d(i)	= feval( d.fDistance,  trk(j).filter );
-
-	end
-    trk(j).gate	= trk(j).d < d.gate;
-    hits        = find(trk(j).gate==1);
-    trk(j).meas	= [];
-    lHits       = length(hits);
-    if( lHits > 0 )
-        if( lHits > 1)
-            for k = 1:lHits-1
-                newTrack(end+1) = j;
-                newScan(end+1)  = trk(j).gate(hits(k+1));
-                newMeas(end+1)  = hits(k+1);
-            end
-            nNew = nNew + lHits - 1;
-        end
-        trk(j).meas             = hits(1);
-        trk(j).measHist(end+1)  = hits(1);
-        trk(j).scanHist(end+1)  = scan;
-        if( trk(j).scan0 == 0 )
-            trk(j).scan0 = scan;
-        end
+    trk(j).filter.x = trk(j).m;
+    trk(j).filter.y = zScan(i).data;
+    trk(j).d(i)	= feval( d.fDistance,  trk(j).filter );
+  end
+	trk(j).gate	= trk(j).d < d.gate;
+	hits        = find(trk(j).gate==1);
+	trk(j).meas	= [];
+	lHits       = length(hits);
+	if( lHits > 0 )
+    if( lHits > 1)
+      for k = 1:lHits-1
+        newTrack(end+1) = j;
+      	newScan(end+1)  = trk(j).gate(hits(k+1));
+        newMeas(end+1)  = hits(k+1);
+      end
+      nNew = nNew + lHits - 1;
     end
-    maxID = max(maxID,trk(j).treeID);
-    maxTag = max(maxTag,trk(j).tag);
+    trk(j).meas             = hits(1);
+    trk(j).measHist(end+1)  = hits(1);
+    trk(j).scanHist(end+1)  = scan;
+    if( trk(j).scan0 == 0 )
+      trk(j).scan0 = scan;
+    end
+  end
+	maxID = max(maxID,trk(j).treeID);
+	maxTag = max(maxTag,trk(j).tag);
 end
 nextID = maxID+1;
 nextTag = maxTag+1;
 
 % Create new tracks assuming that existing tracks had no measurements
-%--------------------------------------------------------------------
 nTrk0 = nTrk;
 for j = 1:nTrk0
   
   if( ~isempty(trk(j).scanHist) && trk(j).scanHist(end) == scan )
   
     % Add a copy of track "j" to the end with NULL measurement
-    %---------------------------------------------------------
     nTrk                        = nTrk + 1;
     trk(nTrk)                   = trk(j);
     trk(nTrk).meas              = [];
@@ -204,7 +196,6 @@ for j = 1:nTrk0
     
     % The track we copied already had a measurement appended for this
     % scan, so replace these entries in the history
-    %----------------------------------------------
     trk(nTrk).measHist(end)     = 0;
     trk(nTrk).scanHist(end)     = scan;
     
@@ -213,13 +204,11 @@ for j = 1:nTrk0
 end
 
 % Do this to notify us if any duplicate tracks are created
-%---------------------------------------------------------
 dup   = CheckForDuplicateTracks( trk );
 trk   = RemoveDuplicateTracks( trk, dup, scan );
 
 
 % Add new tracks for existing tracks which had multiple measurements
-%-------------------------------------------------------------------
 if( nNew > 0 )
 	nTrk = length(trk);
     for k = 1:nNew
@@ -247,7 +236,6 @@ for k = 1:nS
 	nTrk                = nTrk + 1;  
     
     % Use next track ID
-    %------------------
     trkF                = feval(d.fScanToTrack, zScan(i), d.fScanToTrackData, scan, nextID, nextTag );
     if( isempty(trk) )
         trk = trkF;
@@ -293,13 +281,12 @@ end
 
 % Compute track scores for each measurement
 for j = 1:nTrk
-   if( ~isempty(trk(j).meas ) )
-        i = trk(j).meas;
-        trk(j).score(scan)	= MHTTrackScore( zScan(i), trk(j).filter, d.pD, d.pFA, d.pH1, d.pH0 );
-    else
-        trk(j).score(scan)	= MHTTrackScore( [],       trk(j).filter, d.pD, d.pFA, d.pH1, d.pH0 );
-        
-   end
+	if( ~isempty(trk(j).meas ) )
+    i = trk(j).meas;
+    trk(j).score(scan)	= MHTTrackScore( zScan(i), trk(j).filter, d.pD, d.pFA, d.pH1, d.pH0 );
+  else
+    trk(j).score(scan)	= MHTTrackScore( [],       trk(j).filter, d.pD, d.pFA, d.pH1, d.pH0 );        
+	end
 end
 
 % Find the total score for each track
@@ -332,7 +319,7 @@ end
 % Update the Kalman Filters
 for j = 1:nTrk
 	if( ~isempty(zScan) && ~isempty(trk(j).meas) )
-        trk(j).filter.y         = zScan(trk(j).meas);
+        trk(j).filter.y         = zScan(trk(j).meas).data;
         trk(j).filter           = feval( d.update, trk(j).filter );
         trk(j).m                = trk(j).filter.m;
         trk(j).p                = trk(j).filter.p;
@@ -365,7 +352,7 @@ sol = TOMHTAssignment( trk, d.mBest );
 trk0 = trk;
 if( d.pruneTracks )
   [trk,kept,pruned] = TOMHTPruneTracks( trk, sol, d.hypScanLast );
-  b = MHTTrkToB( trk );
+  b                 = MHTTrkToB( trk );
   
   % Do this to notify us if any duplicate tracks are created
   dup   = CheckForDuplicateTracks( trk );
@@ -391,14 +378,11 @@ else
 end
 
 % Form hypotheses
-if( scan >= d.hypScanLast + d.hypScanWindow )
-  hyp = sol.hypothesis(1);
-else
-  hyp = [];
-end
+hyp = sol.hypothesis(1);
 
+%% MHTTrackMgmt>>RemoveDuplicateTracks
 function trk = RemoveDuplicateTracks( trk, dup, scan )
-%% Remove duplicate tracks
+% Remove duplicate tracks
 
 if( ~isempty(dup) )
   MLog('update',sprintf('DUPLICATE TRACKS: %s\n',mat2str(dup)),scan);

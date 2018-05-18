@@ -1,6 +1,6 @@
 
 %% UKFPREDICT Unscented Kalman Filter measurement update step
-%%  Form:
+%% Form
 %   d = UKFPredict( d )
 %
 %% Description
@@ -30,10 +30,6 @@
 %   d	(1,1)  UKF data structure
 %              .m       (:,1)       Mean
 %              .p       (:,:)       Covariance
-
-%% Copyright
-%	Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function d = UKFPredict( d )
 

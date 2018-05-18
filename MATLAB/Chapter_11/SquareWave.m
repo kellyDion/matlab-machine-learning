@@ -1,10 +1,12 @@
-%% SQUAREWAVE
-%
-%% Description
-% Generates a square wave with a magnitude either 0 or 1.
-%
+%% SQUAREWAVE Generate a square wave
 %% Form
 %  [v, d] = SquareWave( t, d )
+%  d = SquareWave               % default data structure
+%  SquareWave                   % run a demo
+%
+%% Description
+% Generates a square wave with a magnitude either 0 or 1. The switch state and
+% time is stored in the data structure d.
 %
 %% Inputs
 %  t      (1,1) Time (sec)
@@ -15,14 +17,11 @@
 %                .state   (1,1) 0 = low, 1 = high
 %
 %% Outputs
+%  v     (1,1)  Value
 %  d      (.)   Data structure
 %
-%% References
-% None.
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+%% See also
+% SquareWave>Demo
 
 function [v,d] = SquareWave( t, d )
 
@@ -54,7 +53,7 @@ else
 end
 
 function d = DataStructure
-%% Default data structure
+%% SquareWave>>DataStructure
 
 d           = struct();
 d.tLow      = 10.0;
@@ -63,7 +62,9 @@ d.tSwitch   = 0;
 d.state     = 0;
 
 function Demo
-%% Demo
+%% SquareWave>Demo
+% Create a square wave using the default data structure and 1000 data points.
+% Generate a plot.
 
 d = SquareWave;
 t = linspace(0,100,1000);

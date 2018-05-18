@@ -1,24 +1,20 @@
-
-%% Draw vertices
-%%  Form:
-%   DrawVertices( v, f, name )
+%% DRAWVERTICES Draw vertices in a new figure.
+%% Form
+%  DrawVertices( v, f, name )
+%  DrawVertices % Demo
 %
 %% Description
-% The figure will be a uniform color
+% The figure will be a uniform color.
 %
 % Type DrawVertices for a demo.
 %
-%%   Inputs
-%   v       (:,3) Vertices
-%   f       (:,3) Faces
-%   name    (1,:) Figure name
+%% Inputs
+%  v       (:,3) Vertices
+%  f       (:,3) Faces
+%  name    (1,:) Figure name
 %
 %% Outputs
-%   None
-%
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+%  None
 
 function DrawVertices( v, f, name )
 
@@ -41,13 +37,11 @@ zlabel('z')
 view(3)
 grid on
 rotate3d on
-s = 10*max(Mag(v'));
-light('position',s*[1 1 1])
 
 function Demo
+%% DrawVertices>Demo
+% Draw a box
 
 [v,f] = Box(2,3,4);
-DrawVertices( v, f, 'box' )
-
-
+DrawVertices( v, f, 'Box' )
 

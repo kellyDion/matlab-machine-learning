@@ -1,6 +1,8 @@
-function [z, h, r] = Residual( y, f )
-
-%--------------------------------------------------------------------------
+%% RESIDUAL Generates residuals
+%% Form
+%   [z, h, r] = Residual( y, f )
+%
+%% Description
 %   Generates residual, measurement matrix and measurement noise matrix.
 %
 %   Handles linear and nonlinear systems. The latter use the Jacobian
@@ -8,14 +10,8 @@ function [z, h, r] = Residual( y, f )
 %   nonlinear systems .h is the pointer to the measurement function.
 %
 %   This handles empty y matrices.
-%--------------------------------------------------------------------------
-%   Form:
-%   [z, h, r] = Residual( y, f )
-%--------------------------------------------------------------------------
 %
-%   ------
-%   Inputs
-%   ------
+%% Inputs
 %   y	(m) Measurement data structure
 %           .data  (:,1) Measurements
 %           .param (1,1) Parameter data structure
@@ -25,22 +21,15 @@ function [z, h, r] = Residual( y, f )
 %   f   (1,1) Filter data structure
 %             .m     (n,1) State vector
 %
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   z	(m,1) Residual
 %   h	(m,n) Linearized measurement matrix y = h*x or
 %   r	(m,m) Noise covariance matrix
 %
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function [z, h, r] = Residual( y, f )
 
 % First path is for a nonlinear filter
-%-------------------------------------
 if( ~isempty(y) )
   if(	isstruct(y) && isfield(y(1).param,'hData') ) 
     p = length(y);
@@ -55,7 +44,6 @@ if( ~isempty(y) )
       end
 
       % Preallocate memory for h
-      %-------------------------
       nS  = sum(n);
       h   = zeros(nS,length(f.m));
       r   = zeros(nS,nS);
@@ -95,13 +83,4 @@ else
 	h   = [];
 	r   = [];
 end
-
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-08-22 14:24:57 -0700 (Mon, 22 Aug 2016) $
-% $Revision: 43106 $
-
-
 

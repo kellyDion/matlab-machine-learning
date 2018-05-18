@@ -1,9 +1,10 @@
-
-%% AUTOMOBILELANECHANGE
+%% AUTOMOBILELANECHANGE Automobile lane change control
+%% Form
+%   passer = AutomobileLaneChange( passer, dY, v, gain )
+%
+%% Description
 % Implements lane change control by pointing the wheels at the target.
 % Generates a steering angle demand and torque demand.
-%% Form:
-%   passer = AutomobileLaneChange( passer, dY, v, gain )
 %
 %% Inputs
 %   passer	(1,1)  Car data structure
@@ -28,9 +29,6 @@
 %                   .errOld
 %                   .torque
 
-%% Copyright
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function passer = AutomobileLaneChange( passer, dX, y, v, gain )
 

@@ -1,11 +1,10 @@
-%% CLASSIFIERSETS
-
+%% CLASSIFIERSETS Puts data into sets
 %% Form
-%  p = ClassifierSets( n, xRange, yRange, name, v, f )
+%  p = ClassifierSets( n, xRange, yRange, name, v, f, setName )
 %
 %% Inputs
 % n       (1,1) Number of points is n x n
-% xRange  (1,2) Range of x coordinaes
+% xRange  (1,2) Range of x coordinates
 % yRange  (1,2) Range of y coordinates
 % name    {:}   Names of sets
 % v       (2,:) Vertices to be used in set membership
@@ -17,19 +16,17 @@
 %             .y (n,n) y coordinate
 %             .m (n,n) Set membership
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-
-function p = ClassifierSets( n, xRange, yRange, name, v, f )
+function p = ClassifierSets( n, xRange, yRange, name, v, f, setName )
 
 
 % Demo
 if( nargin < 1 )
-  v = [0 0;0 4; 4 4; 4 0; 0 2; 2 2; 2 0;2 1;4 1;2 1];
-  f = {[5 6 7 1] [5 2 3 9 10 6] [7 8 9 4]};
-  ClassifierSets( 5, [0 4], [0 4], {'width', 'length'}, v, f );
+  Demo
   return
+end
+
+if( nargin < 7 )
+  setName = 'Classifier Sets';
 end
 
 p.x    = (xRange(2) - xRange(1))*(rand(n,n)-0.5) + mean(xRange);
@@ -37,12 +34,12 @@ p.y    = (yRange(2) - yRange(1))*(rand(n,n)-0.5) + mean(yRange);
 p.m    = Membership( p, v, f );
 
 
-NewFigure('Classifier Sets');
+NewFigure(setName);
 m = length(f);
 c = rand(m,3);
 for k = 1:n
   for j = 1:n 
-    plot(p.x(k,j),p.y(k,j),'marker','o','MarkerEdgeColor',c(p.m(k,j),:))
+    plot(p.x(k,j),p.y(k,j),'marker','o','MarkerEdgeColor','k')
     hold on
   end
 end
@@ -54,6 +51,7 @@ xlabel(name{1});
 ylabel(name{2});
 grid
 
+%% ClassifierSets>>Membership
 function z = Membership( p, v, f )
 
 n = size(p.x,1);
@@ -73,16 +71,15 @@ for k = 1:n
   end
 end
 
+%% ClassifierSets>>PointInPolygon
 function r = PointInPolygon( p, v )
 
 m = size(v,2);
 
 % All outside
-%------------
 r = 0;
 
 % Put the first point at the end to simplify the looping
-%-------------------------------------------------------
 v = [v v(:,1)];
 
 for i = 1:m
@@ -94,5 +91,12 @@ for i = 1:m
     r = ~r;
 	end
 end
+
+%% ClassifierSets>>Demo
+function Demo
+v = [0 0;0 4; 4 4; 4 0; 0 2; 2 2; 2 0;2 1;4 1;2 1];
+f = {[5 6 7 1] [5 2 3 9 10 6] [7 8 9 4]};
+ClassifierSets( 5, [0 4], [0 4], {'width', 'length'}, v, f );
+
 
 

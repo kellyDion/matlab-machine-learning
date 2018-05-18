@@ -1,23 +1,18 @@
-function dup = CheckForDuplicateTracks( trk, allTrees )
-
-%--------------------------------------------------------------------------
-%   Check for duplicate tracks. Compares treeID, measHist, scanHist.
-%
-%   Cycles through all tracks. Compares j'th track with k'th track (k>j).
-%   If the two tracks have identical (treeID, measHist, scanHist), they are
-%   marked as a duplicate pair.
-%
-%   If the two tracks have identical (measHist, scanHist) and input
-%   "allTrees" is true, they are marked as a duplicate pair.
-%
-%--------------------------------------------------------------------------
-%   Form:
+%% CHECKFORDUPLICATETRACKS Check trk data structure for duplicate tracks.
+%% Form
 %   dup = CheckForDuplicateTracks( trk, allTrees )
-%--------------------------------------------------------------------------
 %
-%   ------
-%   Inputs
-%   ------
+%% Description
+% Check for duplicate tracks. Compares treeID, measHist, scanHist.
+%
+% Cycles through all tracks. Compares j'th track with k'th track (k>j).
+% If the two tracks have identical (treeID, measHist, scanHist), they are
+% marked as a duplicate pair.
+%
+% If the two tracks have identical (measHist, scanHist) and input
+% "allTrees" is true, they are marked as a duplicate pair.
+%
+%% Inputs
 %   trk       (.)     Track data structure array. Must include fields:
 %                       .treeID     Integer track-tree ID
 %                       .measHist   Integer array of measurement numbers.
@@ -26,24 +21,13 @@ function dup = CheckForDuplicateTracks( trk, allTrees )
 %                     If 0, then look for duplicates within each tree.
 %                     Default is 0.
 %
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   dup       (N,2)   Matrix of duplicate tracks. N rows of index pairs. 
 %                     For example, dup = [3 5;4 7] means that trk(3) and 
 %                     trk(5) are duplicates, and that trk(4) and trk(7) are
 %                     duplicates.
-%
-%--------------------------------------------------------------------------
-%   SBIR DATA RIGHTS. Contract No. FA9453-11-C-0163, Contractor:
-%   Princeton Satellite Systems, 6 Market. St. Suite 926, Plainsboro, 
-%   NJ 08536. Expiration of SBIR Data Rights Period: December 27, 2018
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function dup = CheckForDuplicateTracks( trk, allTrees )
 
 if( nargin<2 )
   allTrees = 0;
@@ -77,11 +61,3 @@ for j=1:length(trk)
     
   end
 end
-
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-09-15 14:33:31 -0400 (Thu, 15 Sep 2016) $
-% $Revision: 43204 $
-

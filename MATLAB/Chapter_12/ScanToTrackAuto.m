@@ -1,6 +1,8 @@
-function trk = ScanToTrackAuto( xMeas, d, scan0, treeID, tag )
-
-%--------------------------------------------------------------------------
+%% SCANTOTRACKAUTO  Initializes a new track for an automobile
+%% Form
+%   trk = ScanToTrackAuto( xMeas, d, scan0, treeID, tag )
+%
+%% Description
 %   Initializes a new track for an automobile from radar measurements.
 %
 %   The new state estimate is [x;y;vX;vY]. It is derived from the
@@ -8,37 +10,20 @@ function trk = ScanToTrackAuto( xMeas, d, scan0, treeID, tag )
 %   the range rate is entirely along x. x is the direction along the
 %   highway.
 %
-%--------------------------------------------------------------------------
-%   Form:
-%   trk = ScanToTrackAuto( xMeas, d, scan0, treeID, tag )
-%--------------------------------------------------------------------------
-%
-%   ------
-%   Inputs
-%   ------
-%   xMeas	(1,1)   Position measurement data
+
+%% Inputs
+%   xMeas   (1,1)   Position measurement data
 %   d       (1,1)   Data structure
 %                   .x      (6,1) State of tracking car
 %                   .filter	(1,1) Filter data structure
-%   scan0	(1,1)   Scan number at which this track is created
+%   scan0   (1,1)   Scan number at which this track is created
 %   treeID	(1,1)   Track-tree ID. The track is inside this tree.
 %   tag     (1,1)   Unique tag to distinguish from all other tracks
 %   
-%   -------
-%   Outputs
-%   -------
+%% Outputs
 %   trk     (1,1)   Track data structure
 %
-%--------------------------------------------------------------------------
-%   SBIR DATA RIGHTS. Contract No. FA9453-11-C-0163, Contractor:
-%   Princeton Satellite Systems, 6 Market. St. Suite 926, Plainsboro, 
-%   NJ 08536. Expiration of SBIR Data Rights Period: December 27, 2018
-%--------------------------------------------------------------------------
-
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function trk = ScanToTrackAuto( xMeas, d, scan0, treeID, tag )
 
 if( nargin < 4 )
   treeID = 0;
@@ -51,7 +36,6 @@ if( nargin < 5 )
 end
 
 % Compute the initial state estimate
-%-----------------------------------
 range       = xMeas.data(1);
 rangeRate   = xMeas.data(2);
 azimuth     = xMeas.data(3);
@@ -65,8 +49,7 @@ x(1:2,1)    = cCarToI*dR;
 x(3 ,1)     = rangeRate*cos(azimuth);
 
 % Compute the covariance from the measurement noise
-%--------------------------------------------------
-r           = d.filter.r{1};
+r           = d.filter.r;
 range       = sqrt(r(1,1));
 rangeRate   = sqrt(r(2,2));
 azimuth     = sqrt(r(3,3));
@@ -78,7 +61,6 @@ p           = diag([cCarToI*dR;rangeRate;rangeRate].^2);
 trk         = MHTInitializeTrk(d.filter);
 
 % Assemble the trk data structure
-%--------------------------------
 trk.filter      = d.filter;
 trk.filter.m    = x;
 trk.filter.x    = x;
@@ -100,10 +82,3 @@ trk.new         = [];
 trk.gate        = [];
 trk.tag         = tag;
 trk.scan0       = scan0;
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-09-15 14:33:31 -0400 (Thu, 15 Sep 2016) $
-% $Revision: 43204 $
-

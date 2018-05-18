@@ -21,10 +21,6 @@
 %  See also AutoRadar, AutomobilePassing, AutomobileLaneChange,
 %  RHSAutomobile, RHSAutomobileXY, AutoRadarUKF
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 %% Initialize
 
 % Set the seed for the random number generators. 
@@ -89,7 +85,7 @@ s  = 1:6*nAuto;
 
 %% Simulate
 t = (0:(n-1))*dT;
-fprintf(1,'\nRunning the simulation...');
+fprintf(1,'\nRunning the simulation...\n');
 for k = 1:n
     
     % Plotting
@@ -133,7 +129,7 @@ fprintf(1,'DONE.\n');
 xRadar = xP(1:6,:);
 
 % Plot the simulation results
-NewFigure( 'Auto' )
+NewFigure( 'Auto' );
 kX = 1:6:length(x);
 kY = 2:6:length(x);
 c  = 'bgrcmyk';

@@ -4,10 +4,6 @@
 %% See also
 % RungeKutta, RHSShip, QCR
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 %% Initialize
 nSim	= 10000;                      % Number of time steps
 dT    = 1;                          % Time step (sec)

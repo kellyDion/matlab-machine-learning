@@ -4,10 +4,6 @@
 %% See also
 % RungeKutta, RHSOscillatorControl
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 %% Initialize
 n             = 4;                    % Number of measurement sequences
 nSim          = 2^16;                 % Number of time steps

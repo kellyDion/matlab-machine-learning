@@ -1,12 +1,11 @@
 %% UKFPSim
 % Demonstrate parameter learning using Unscented Kalman Filter. 
+% This ohnly has an update function. The states (position and velocity)
+% are assumed known. It is estimating the undamped natural frequency.
+%
 %% See also
 % RungeKutta, RHSOscillator, TimeLabel, KFInitialize, UKFPUpdate
-% AngleMeasurement
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+% AngleMeasurement, PlotSet, UKFPUpdate.
 
 %% Initialize
 nSim            = 150;             % Simulation steps

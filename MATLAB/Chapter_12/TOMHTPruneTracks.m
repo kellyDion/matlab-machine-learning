@@ -1,5 +1,8 @@
-
-%% TOMHTPruneTracks
+%% TOMHTPRUNETRACKS Track pruning algorithsm
+%% Form
+%   [tracksP,keep,prune,d] = TOMHTPruneTracks( tracks, soln );
+%
+%% Description
 % Track-oriented MHT - track pruning algorithm.
 %
 % Keep the following tracks
@@ -9,9 +12,6 @@
 % 1. track ID, and
 % 2. the first "P" measurements
 % found in "M best" hypotheses
-%
-%% Form:
-%   [tracksP,keep,prune,d] = TOMHTPruneTracks( tracks, soln );
 %
 %% Inputs
 %   tracks    (.)     Data structure array of tracks
@@ -32,10 +32,6 @@
 %                       .bestHypFullTracks
 %                       .bestHypPartialTracks
 %
-
-%% Copyright
-%	Copyright (c) 2012-2013 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function [tracksP,keep,prune,d] = TOMHTPruneTracks( tracks, soln, scan0, opts )
 
@@ -62,7 +58,12 @@ d.bestHypPartialTracks  = [];
 % number of hypotheses, tracks, scans
 nHyp    = length(soln.hypothesis);
 nTracks = length(tracks);
-nScans  = size(soln.hypothesis(1).tracks,2);
+scanSet = [];
+for j=1:length(soln.hypothesis(1).scans)
+  scanSet = [scanSet, soln.hypothesis(1).scans{j}];
+end
+scanSet = unique(scanSet);
+nScans  = length(scanSet);
 
 % must limit # required matching measurements to # scans
 if( opts.nFirstMeasMatch > nScans )
@@ -76,7 +77,7 @@ if( opts.nHighScoresToKeep > nTracks )
   keep    = 1:length(tracks);
   prune   = [];
   d.bestTrackScores = keep;
-  return
+  return;
 end
 
 % get needed vectors out of trk array
@@ -151,8 +152,7 @@ else
   % included in "M best" hypotheses
   nTracksInHypSet = size(hypMat,1);
   tagMap = rand(opts.nFirstMeasMatch+1,1);
-  b = MHTTrkToB2( tracks );
-  trkMat = [ trackIDs', b ];
+  trkMat = MHTTrkToB( tracks );
   trkTag = trkMat(:,1:opts.nFirstMeasMatch+1)*tagMap;
   for j=1:nTracksInHypSet
     hypTrkTag = hypMat(j,1:opts.nFirstMeasMatch+1)*tagMap;
@@ -174,4 +174,3 @@ prune = find(prune);
 
 % return only those tracks we want to keep
 tracksP = tracks(keep);
-

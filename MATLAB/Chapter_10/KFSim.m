@@ -1,11 +1,12 @@
 %% KFSim
-% Demonstrate a Kalman Filter. 
+% Demonstrate a Kalman Filter for an oscillator. The oscillator is a
+% single degree of freedom (2 state) system with a spring and a damper.
+% The measurement is of the position. Simulation is using 4th order
+% Runge-Kutta integration. The oscillator has a step input.
+%
 %% See also
 % RungeKutta, RHSOscillator, TimeLabel, KFInitialize, KFUpdate, KFPredict
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
+% PlotSet
 
 %% Initialize
 tEnd          = 100.0;            % Simulation end time (sec)
@@ -15,7 +16,7 @@ d.a           = 0.1;              % Disturbance acceleration
 d.omega       = 0.2;              % Oscillator frequency
 d.zeta        = 0.1;              % Damping ratio
 x             = [0;0];            % Initial state [position;velocity]
-y1Sigma        = 1;                % 1 sigma position measurement noise
+y1Sigma        = 1;               % 1 sigma position measurement noise
 
 % xdot = a*x + b*u
 a             = [0 1;-2*d.zeta*d.omega -d.omega^2]; % Continuous time model

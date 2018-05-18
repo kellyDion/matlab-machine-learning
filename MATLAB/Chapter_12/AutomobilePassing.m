@@ -1,12 +1,13 @@
-
-%% AUTOMOBILEPASSING
+%% AUTOMOBILEPASSING Automobile passing control
+%% Form
+%  passer = AutomobilePassing( passer, passee, dY, dV, dX, gain )
+%
+%% Description
 % Implements passing control by pointing the wheels at the target.
 % Generates a steering angle demand and torque demand.
 %
 % Prior to passing the passState is 0. During the passing it is 1.
 % When it returns to its original lane the state is set to 0.
-%% Form:
-%   passer = AutomobilePassing( passer, passee, dY, dV, dX, gain )
 %
 %% Inputs
 %   passer	(1,1)  Car data structure
@@ -33,32 +34,28 @@
 %                   .errOld   
 %                   .torque	   
 
-%% Copyright
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function passer = AutomobilePassing( passer, passee, dY, dV, dX, gain )
 
 % Default gains
 if( nargin < 6 )
-    gain = [0.05 80 120];
+	gain = [0.05 80 120];
 end
 
 % Lead the target unless the passing car is in front
 if( passee.x(1) + dX > passer.x(1) )
-    xTarget = passee.x(1) + dX;
+	xTarget = passee.x(1) + dX;
 else
-    xTarget = passer.x(1) + dX;
+	xTarget = passer.x(1) + dX;
 end
 
 % This causes the passing car to cut in front of the car being passed
 if( passer(1).passState == 0 )
-    if( passer.x(1) > passee.x(1) + 2*dX )
-        dY = 0;
-        passer(1).passState = 1;
-    end
-else
+	if( passer.x(1) > passee.x(1) + 2*dX )
     dY = 0;
+    passer(1).passState = 1;
+	end
+else
+	dY = 0;
 end
 
 % Control calculation
@@ -67,6 +64,6 @@ theta           = passer.x(5);
 dR              = target - passer.x(1:2);
 angle           = atan2(dR(2),dR(1));
 err             = angle - theta;
-passer.delta	= gain(1)*(err + gain(3)*(err - passer.errOld));
+passer.delta    = gain(1)*(err + gain(3)*(err - passer.errOld));
 passer.errOld   = err;
 passer.torque   = gain(2)*(passee.x(3) + dV - passer.x(3));

@@ -1,11 +1,10 @@
 %% Aircraft Closed Loop Demo
-% Demonstrate learning control of an aircraft
+% Demonstrate learning control of an aircraft. It uses a PID 
+% controller with a sigma-pi neural net. The aircraft is a simple F-16
+% model.
+%
 %% See also
 % RungeKutta, RHSAircraft
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
 
 % Options for control
 addLearning   = true;

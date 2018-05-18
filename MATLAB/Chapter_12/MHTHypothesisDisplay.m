@@ -1,26 +1,18 @@
-function MHTHypothesisDisplay( hyp, trk, k, t )
-
-%--------------------------------------------------------------------------
-%   Display hypothesis data in a console view.
-%--------------------------------------------------------------------------
-%   Form:
+%% MHTHYPOTHESISDISPLAY Display hypothesis data in a console view.
+%% Form:
 %   MHTHypothesisDisplay( hyp, trk, k, t )
-%--------------------------------------------------------------------------
 %
-%   ------
-%   Inputs
-%   ------
+%% Description
+%   Display hypothesis data in a console view.
+%
+%% Inputs
 %   hyp         (.)     Hypothesis data structure
 %   trk         (:)     Tracks array
 %   k           (1,1)   Scan
 %   t           (1,1)   Time
 %
-%--------------------------------------------------------------------------
 
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function MHTHypothesisDisplay( hyp, trk, k, t )
 
 if( ~isempty(hyp) )
   str = sprintf('New hypothesis at t = %8g:\n================\n',t);
@@ -43,15 +35,7 @@ if( ~isempty(hyp) )
     dA(2:2:n)   = tmp;
 
     scanStr = sprintf(' %*d ', dA);
-    str = [str,sprintf('%7d \t %s \t %2.2f \n', hyp.treeID(j), scanStr, hyp.trackScores(j))];
+    str     = [str,sprintf('%7d \t %s \t %2.2f \n', hyp.treeID(j), scanStr, hyp.trackScores(j))];
   end
   MLog('add',str,k);    
 end
-
-
-%--------------------------------------
-% PSS internal file version information
-%--------------------------------------
-% $Date: 2016-08-22 14:24:57 -0700 (Mon, 22 Aug 2016) $
-% $Revision: 43106 $
-

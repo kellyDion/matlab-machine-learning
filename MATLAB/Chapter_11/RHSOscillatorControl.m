@@ -1,4 +1,4 @@
-%% RHSOSCILLATOR Right hand side of an oscillator.
+%% RHSOSCILLATORCONTROL Right hand side of an oscillator.
 %% Form
 %  xDot = RHSOscillatorControl( ~, x, a )
 %
@@ -24,14 +24,10 @@
 %                .omega (1,1) Natural frequency (rad/s)
 %
 %% Outputs
-%  x       (2,1) State vector derivative d[r;v]/dt
+%  xDot    (2,1) State vector derivative d[r;v]/dt
 %
 %% References
 % None.
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function xDot = RHSOscillatorControl( ~, x, d )
 

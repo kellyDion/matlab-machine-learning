@@ -1,7 +1,7 @@
-%% FULLYCONNECTEDNN
-%
-%% Format
+%% FULLYCONNECTEDNN Create a fully connected neural net
+%% Form
 % y = FullyConnectedNN( x, d )
+% FullyConnectedNN % Demo
 %
 %% Description 
 % Implements a fully connected neural network
@@ -17,11 +17,6 @@
 %% Outputs
 %
 %  y  (m,1) Outputs
-%
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function y = FullyConnectedNN( x, d )
 
@@ -46,13 +41,15 @@ for k = 1:d.m
   end
 end
 
+%% FullyConnectedNN>>DefaultDataStructure
 function d = DefaultDataStructure
 %% Default Data Structure
 
 d = struct('w',[],'b',[],'aFun','tanh','m',1);
 
 function Demo
-%% Demo
+%%  FullyConnectedNN>Demo
+% Show a fully connected neural net. Inputs are a sine and cosine.
 
 d       = DefaultDataStructure;
 a       = linspace(0,8*pi);

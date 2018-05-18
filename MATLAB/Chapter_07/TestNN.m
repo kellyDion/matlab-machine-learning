@@ -1,22 +1,14 @@
-%% Test a neural net
+%% Test a neural net using random weights
+%
 %% Description
-% Uses the trained convolutional neural net to determine if the image
-% is a cat.
+% Test the neural net software with a picture. Use the built in random
+% weights
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
+folderPath  = 'Cats1024/';
+[s, name]   = ImageArray( folderPath, 4 );
+d           = ConvolutionalNN;
 
-name  = 'RoboPanda.png';
-t     = rgb2gray(imread(name));
+% We use the last cat picture for the test
+[d, r]      = ConvolutionalNN( 'random', d, s{end} );
 
-NewFigure('Test Image');
-colormap(gray);
-image(t);
-axis off
-
-d       = load('TrainingData');
-[d, r]  = ConvolutionalNN( 'test', d, t );
-
-
-fprintf(1,'Image %s has a %4.1f%% chance of being a cat\n',name,100*r);
+fprintf(1,'Image %s has a %4.1f%% chance of being a cat\n',name{end},100*r);

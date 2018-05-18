@@ -1,19 +1,17 @@
-
+%% FILTERSIM Run a simulation of a filter.
 %% Form
 %  FilterSim( d )
+%  FilterSim % Demo
 %
-%% Decription
+%% Description
 % Run a simulation for a second order filter
-% Type FilterSim for a demo.
+% Type FilterSim for a demo. The demo shows the pulse response.
 %
 %% Inputs
 %  d         (.)  Data structure
 %
 %% Outputs
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
+%  None
 
 function FilterSim( d )
 
@@ -73,6 +71,4 @@ d.input         = 'pulse';
 d.tPulseBegin   = 10;
 d.tPulseEnd     = 20;
 d.tEnd          = 100;
-
-
 

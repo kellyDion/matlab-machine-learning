@@ -8,10 +8,6 @@
 %% See also
 % RungeKutta, RHSAircraft
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-% All rights reserved.
-
 % This is from flight testing
 dRHS          = RHSAircraft;	% Get the default data structure has F-16 data
 h             = 10000;

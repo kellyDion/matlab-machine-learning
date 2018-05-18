@@ -4,7 +4,7 @@
 %
 %% Description
 % Integrate the right-hand side function one fixed timestep h. Called
-% function is of the form:
+% function is of the form
 %
 %  Fun(t,x,varargin)
 %
@@ -19,10 +19,6 @@
 %
 %% Outputs
 %  x         (:,1)	Updated state
-
-%% Copyright
-% Copyright (c) 2015 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function x = RungeKutta( Fun, t, x, h, varargin )
 

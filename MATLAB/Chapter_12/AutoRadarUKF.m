@@ -1,10 +1,11 @@
-
-%% AUTORADARUKF
-%   Automotive (2D) radar model for use with UKF.
+%% AUTORADARUKF Radar model for the auto UKF
+%% Form
+%  y = AutoRadarUKF( x, d )
 %
-%   Returns azimuth, range and range rate. 
-%% Form:
-%   y = AutoRadarUKF( x, d )
+%% Description
+% Automotive (2D) radar model for use with UKF.
+%
+% Returns azimuth, range and range rate. 
 %
 %% Inputs
 %   x	(4,1)   State
@@ -14,11 +15,6 @@
 %% Outputs
 %   y	(3,1)	Measurements [range;range rate; azimuth] (m, m/s, rad)
 %
-%--------------------------------------------------------------------------
-
-%% Copyright
-%   Copyright (c) 2013 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function y = AutoRadarUKF( x, d )
 

@@ -1,31 +1,23 @@
-function [trkData, trk] = MHTInitialize( varargin )
 
 %% MHTINITIALIZE Initializes the MHT data structure.
-% Enter parameter pairs.
-%% Form:
+%% Form
 %  [trkData, trk] = MHTInitialize( varargin )
+%
+%% Description
+% Enter parameter pairs.
 %% Inputs
 %  varargin       {:}  Parameter pairs
 %
 %% Outputs
 %  trkData        (.)   MHT track data structure
 %  trk            (1,1) First track data structure
+%
 
-%--------------------------------------------------------------------------
-%   SBIR DATA RIGHTS. Contract No. FA9453-11-C-0163, Contractor:
-%   Princeton Satellite Systems, 6 Market. St. Suite 926, Plainsboro, 
-%   NJ 08536. Expiration of SBIR Data Rights Period: December 27, 2018
-%--------------------------------------------------------------------------
-
-%--------------------------------------------------------------------------
-%	Copyright (c) 2013, 2016 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
-%--------------------------------------------------------------------------
+function [trkData, trk] = MHTInitialize( varargin )
 
 createTrack = 0;
 
 % Cycle through all the parameter pairs
-%--------------------------------------
 for k = 1:2:length(varargin)
     switch lower(varargin{k})
         case 'probability false alarm'
@@ -49,7 +41,7 @@ for k = 1:2:length(varargin)
         case 'measurement volume'
             trkData.vC = varargin{k+1};
             
-        case 'number of scans';
+        case 'number of scans'
             trkData.nScan = varargin{k+1};
             
         case 'gate'
@@ -58,7 +50,7 @@ for k = 1:2:length(varargin)
         case 'm best'
             trkData.mBest = varargin{k+1};
             
-        case 'number of tracks';
+        case 'number of tracks'
             trkData.nTrk = varargin{k+1};
             
         case 'scan to track function'

@@ -1,9 +1,9 @@
-%% NEWFIGURE create a new figure window
+%% NEWFIGURE Create a new named figure window
 %% Form:
 %   h = NewFigure( x, varargin )
 %
 %% Description
-% Creates a new figure window
+% Creates a new figure window and assigns it a name.
 %
 %% Inputs
 %   x          (:)    Name for the figure

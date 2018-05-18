@@ -1,11 +1,13 @@
-%% Pool - pool values from a 2D array
-%
-%% Format
+%% POOL Pool values from a 2D array
+%% Form
 % b = Pool( a, n, type )
+% Pool % Demo
 %
 %% Description 
 % Creates an nxn matrix from a.
-% a be a power of 2.
+% a must be a power of 2.
+%
+% Type Pool for a demo
 %
 %% Inputs
 %
@@ -18,16 +20,11 @@
 %  b  (n,n)  Pool
 %
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function b = Pool( a, n, type )
 
 % Demo
 if( nargin < 1 )
-  a = rand(4,4)
-  b = Pool( a, 4, type);
+  Demo
   return
 end
 
@@ -50,3 +47,11 @@ for j = 1:n
     b(j,k) = p(p(a(r,c)));
   end
 end
+
+function Demo
+%% Pool>Demo
+% Pool a random 4x4 matrix
+
+a = rand(4,4);
+disp(a);
+Pool( a, 4);

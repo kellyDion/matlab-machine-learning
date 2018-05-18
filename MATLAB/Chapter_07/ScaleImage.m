@@ -1,7 +1,7 @@
-%% SCALEIMAGE - Scale an image by powers of 2.
-
-%% Format
+%% SCALEIMAGE Scale an image by powers of 2.
+%% Form
 % s2 = ScaleImage( s1, n )
+% ScaleImage % Demo
 %
 %% Description
 % Scales an image by powers of 2. The scaling will be 2^n.
@@ -16,10 +16,6 @@
 %
 %  s1 (:,:,3)  Scaled image
 %
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function s2 = ScaleImage( s1, q )
 
@@ -48,7 +44,8 @@ for i = 1:mD
 end
 
 function Demo
-%% Demo
+%% ScaleImage>Demo
+% Scale an image of a cat
 
 s1 = flipud(imread('Cat.png'));
 

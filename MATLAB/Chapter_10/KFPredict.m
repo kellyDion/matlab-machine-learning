@@ -1,5 +1,5 @@
 %% KFPREDICT Linear Kalman Filter prediction step.
-%%  Form:
+%% Form
 %   d = KFPredict( d )
 %
 %% Description
@@ -24,10 +24,6 @@
 %
 %% References
 % None.
-
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
 
 function d = KFPredict( d )
   

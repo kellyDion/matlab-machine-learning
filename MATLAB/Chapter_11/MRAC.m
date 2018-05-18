@@ -20,11 +20,6 @@
 %
 %% References
 % None.
-
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function d = MRAC( omega, d )
 
 if( nargin < 1 )
@@ -35,8 +30,9 @@ end
 d.x	= RungeKutta( @RHS, 0, d.x, d.dT, d, omega );
 d.u = d.x(3)*d.uC - d.x(4)*omega;
 
+%% MRAC>>DataStructure
 function d = DataStructure
-%% Default data structure
+% Default data structure
 
 d       = struct();
 d.aM    = 2.0;
@@ -47,9 +43,9 @@ d.u     = 0;
 d.gamma = 1;
 d.dT    = 0.1;
 
-
+%% MRAC>>RHS
 function xDot = RHS( ~, x, d, omega )
-%% RHS for MRAC
+% RHS for MRAC
 
 e    = omega - x(5);
 xDot = [-d.aM*x(1) + d.aM*d.uC;...
